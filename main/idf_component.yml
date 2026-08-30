@@ -1,0 +1,4 @@
+dependencies:
+  carlos-lorenzo/ads1299:
+    version: "*"
+    registry_url: https://components-staging.espressif.com

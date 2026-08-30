@@ -1,0 +1,24 @@
+dependencies:
+  idf:
+    version: '>=5.3'
+description: ADS1299 driver for ESP-IDF
+documentation: https://ads1299-esp.readthedocs.io/
+files:
+  exclude:
+  - '**/cmake-build-debug-espidf/**/*'
+  - '**/docs/**/*'
+  - '**/build/**/*'
+  - '**/dist/**/*'
+  - '**/personal_references/**/*'
+  - '**/.venv/**/*'
+license: MIT
+repository: https://github.com/carlos-lorenzo/ads1299-esp.git
+tags:
+- ads1299
+- eeg
+- biosignal
+- spi
+- adc
+- eeg-acquisition
+url: https://github.com/carlos-lorenzo/ads1299-esp
+version: 0.1.1

@@ -1,0 +1,3467 @@
+.
+├── activate_idf.sh
+├── build
+│   ├── app-flash_args
+│   ├── app-flash_args.in
+│   ├── bootloader
+│   │   ├── bootloader.bin
+│   │   ├── bootloader.elf
+│   │   ├── bootloader.map
+│   │   ├── build.ninja
+│   │   ├── CMakeCache.txt
+│   │   ├── CMakeFiles
+│   │   │   ├── 4.4.2
+│   │   │   │   ├── CMakeASMCompiler.cmake
+│   │   │   │   ├── CMakeCCompiler.cmake
+│   │   │   │   ├── CMakeCXXCompiler.cmake
+│   │   │   │   ├── CMakeDetermineCompilerABI_C.bin
+│   │   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│   │   │   │   ├── CMakeSystem.cmake
+│   │   │   │   ├── CompilerIdASM
+│   │   │   │   ├── CompilerIdC
+│   │   │   │   │   ├── a.out
+│   │   │   │   │   ├── CMakeCCompilerId.c
+│   │   │   │   │   └── tmp
+│   │   │   │   └── CompilerIdCXX
+│   │   │   │       ├── a.out
+│   │   │   │       ├── CMakeCXXCompilerId.cpp
+│   │   │   │       └── tmp
+│   │   │   ├── bootloader.elf.dir
+│   │   │   │   └── project_elf_src_esp32s3.c.obj
+│   │   │   ├── clean_additional.cmake
+│   │   │   ├── cmake.check_cache
+│   │   │   ├── CMakeConfigureLog.yaml
+│   │   │   ├── CMakeScratch
+│   │   │   ├── git-data
+│   │   │   │   ├── grabRef.cmake
+│   │   │   │   ├── HEAD
+│   │   │   │   └── head-ref
+│   │   │   ├── InstallScripts.json
+│   │   │   ├── pkgRedirects
+│   │   │   ├── rules.ninja
+│   │   │   └── TargetDirectories.txt
+│   │   ├── cmake_install.cmake
+│   │   ├── compile_commands.json
+│   │   ├── config
+│   │   │   ├── kconfig_menus.json
+│   │   │   ├── sdkconfig.cmake
+│   │   │   ├── sdkconfig.h
+│   │   │   └── sdkconfig.json
+│   │   ├── config.env
+│   │   ├── esp-idf
+│   │   │   ├── bootloader
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── bootloader_support
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_bootloader_support.dir
+│   │   │   │   │       ├── bootloader_flash
+│   │   │   │   │       │   └── src
+│   │   │   │   │       │       ├── bootloader_flash.c.obj
+│   │   │   │   │       │       ├── bootloader_flash_config_esp32s3.c.obj
+│   │   │   │   │       │       └── flash_qio_mode.c.obj
+│   │   │   │   │       └── src
+│   │   │   │   │           ├── bootloader_clock_init.c.obj
+│   │   │   │   │           ├── bootloader_clock_loader.c.obj
+│   │   │   │   │           ├── bootloader_common.c.obj
+│   │   │   │   │           ├── bootloader_common_loader.c.obj
+│   │   │   │   │           ├── bootloader_console.c.obj
+│   │   │   │   │           ├── bootloader_console_loader.c.obj
+│   │   │   │   │           ├── bootloader_efuse.c.obj
+│   │   │   │   │           ├── bootloader_init.c.obj
+│   │   │   │   │           ├── bootloader_mem.c.obj
+│   │   │   │   │           ├── bootloader_panic.c.obj
+│   │   │   │   │           ├── bootloader_random.c.obj
+│   │   │   │   │           ├── bootloader_random_esp32s3.c.obj
+│   │   │   │   │           ├── bootloader_sha.c.obj
+│   │   │   │   │           ├── bootloader_utility.c.obj
+│   │   │   │   │           ├── esp32s3
+│   │   │   │   │           │   ├── bootloader_esp32s3.c.obj
+│   │   │   │   │           │   └── bootloader_soc.c.obj
+│   │   │   │   │           ├── esp_image_format.c.obj
+│   │   │   │   │           ├── flash_encrypt.c.obj
+│   │   │   │   │           ├── flash_partitions.c.obj
+│   │   │   │   │           └── secure_boot.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libbootloader_support.a
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── efuse
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_efuse.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   ├── esp_efuse_fields.c.obj
+│   │   │   │   │       │   ├── esp_efuse_rtc_calib.c.obj
+│   │   │   │   │       │   ├── esp_efuse_table.c.obj
+│   │   │   │   │       │   └── esp_efuse_utility.c.obj
+│   │   │   │   │       └── src
+│   │   │   │   │           ├── efuse_controller
+│   │   │   │   │           │   └── keys
+│   │   │   │   │           │       └── with_key_purposes
+│   │   │   │   │           │           └── esp_efuse_api_key.c.obj
+│   │   │   │   │           ├── esp_efuse_api.c.obj
+│   │   │   │   │           ├── esp_efuse_fields.c.obj
+│   │   │   │   │           └── esp_efuse_utility.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libefuse.a
+│   │   │   ├── esp_app_format
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── esp_blockdev
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── esp_bootloader_format
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_bootloader_format.dir
+│   │   │   │   │       └── esp_bootloader_desc.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_bootloader_format.a
+│   │   │   ├── esp_common
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_common.dir
+│   │   │   │   │       └── src
+│   │   │   │   │           └── esp_err_to_name.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_common.a
+│   │   │   ├── esp_hal_ana_conv
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_ana_conv.dir
+│   │   │   │   │       ├── adc_hal.c.obj
+│   │   │   │   │       ├── adc_hal_common.c.obj
+│   │   │   │   │       ├── adc_oneshot_hal.c.obj
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   ├── adc_periph.c.obj
+│   │   │   │   │       │   └── temperature_sensor_periph.c.obj
+│   │   │   │   │       └── temperature_sensor_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_ana_conv.a
+│   │   │   ├── esp_hal_clock
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_clock.dir
+│   │   │   │   │       └── esp32s3
+│   │   │   │   │           └── clk_tree_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_clock.a
+│   │   │   ├── esp_hal_dma
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_dma.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   └── gdma_periph.c.obj
+│   │   │   │   │       ├── gdma_hal_ahb_v1.c.obj
+│   │   │   │   │       └── gdma_hal_top.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_dma.a
+│   │   │   ├── esp_hal_gpio
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_gpio.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   ├── dedic_gpio_periph.c.obj
+│   │   │   │   │       │   ├── rtc_io_periph.c.obj
+│   │   │   │   │       │   └── sdm_periph.c.obj
+│   │   │   │   │       ├── gpio_hal.c.obj
+│   │   │   │   │       ├── rtc_io_hal.c.obj
+│   │   │   │   │       └── sdm_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_gpio.a
+│   │   │   ├── esp_hal_gpspi
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_gpspi.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   └── spi_periph.c.obj
+│   │   │   │   │       ├── spi_hal.c.obj
+│   │   │   │   │       ├── spi_hal_iram.c.obj
+│   │   │   │   │       ├── spi_slave_hal.c.obj
+│   │   │   │   │       ├── spi_slave_hal_iram.c.obj
+│   │   │   │   │       └── spi_slave_hd_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_gpspi.a
+│   │   │   ├── esp_hal_mspi
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── esp_hal_pmu
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_pmu.dir
+│   │   │   │   │       ├── brownout_hal.c.obj
+│   │   │   │   │       └── esp32s3
+│   │   │   │   │           └── rtc_cntl_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_pmu.a
+│   │   │   ├── esp_hal_rtc_timer
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── esp_hal_security
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_security.dir
+│   │   │   │   │       └── mpu_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_security.a
+│   │   │   ├── esp_hal_timg
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_timg.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   └── timer_periph.c.obj
+│   │   │   │   │       └── timer_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_timg.a
+│   │   │   ├── esp_hal_uart
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_uart.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   └── uart_periph.c.obj
+│   │   │   │   │       ├── uart_hal.c.obj
+│   │   │   │   │       ├── uart_hal_iram.c.obj
+│   │   │   │   │       └── uhci_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_uart.a
+│   │   │   ├── esp_hal_usb
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_usb.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   └── usb_dwc_periph.c.obj
+│   │   │   │   │       ├── usb_dwc_hal.c.obj
+│   │   │   │   │       ├── usb_serial_jtag_hal.c.obj
+│   │   │   │   │       └── usb_wrap_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_usb.a
+│   │   │   ├── esp_hal_wdt
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hal_wdt.dir
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   └── mwdt_periph.c.obj
+│   │   │   │   │       ├── rom_patch.c.obj
+│   │   │   │   │       └── xt_wdt_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_hal_wdt.a
+│   │   │   ├── esp_hw_support
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_hw_support.dir
+│   │   │   │   │       ├── cpu.c.obj
+│   │   │   │   │       ├── esp_memory_utils.c.obj
+│   │   │   │   │       └── port
+│   │   │   │   │           └── esp32s3
+│   │   │   │   │               ├── chip_info.c.obj
+│   │   │   │   │               ├── cpu_region_protect.c.obj
+│   │   │   │   │               ├── esp_cpu_intr.c.obj
+│   │   │   │   │               ├── rtc_clk.c.obj
+│   │   │   │   │               ├── rtc_clk_init.c.obj
+│   │   │   │   │               ├── rtc_init.c.obj
+│   │   │   │   │               ├── rtc_sleep.c.obj
+│   │   │   │   │               └── rtc_time.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   ├── libesp_hw_support.a
+│   │   │   │   ├── lowpower
+│   │   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── cmake_install.cmake
+│   │   │   │   ├── mspi_timing_tuning
+│   │   │   │   │   └── port
+│   │   │   │   │       └── esp32s3
+│   │   │   │   │           ├── CMakeFiles
+│   │   │   │   │           └── cmake_install.cmake
+│   │   │   │   └── port
+│   │   │   │       └── esp32s3
+│   │   │   │           ├── CMakeFiles
+│   │   │   │           └── cmake_install.cmake
+│   │   │   ├── esp_libc
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── esp_rom
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_rom.dir
+│   │   │   │   │       └── patches
+│   │   │   │   │           ├── esp_rom_cache_esp32s2_esp32s3.c.obj
+│   │   │   │   │           ├── esp_rom_cache_writeback_esp32s3.S.obj
+│   │   │   │   │           ├── esp_rom_crc.c.obj
+│   │   │   │   │           ├── esp_rom_efuse.c.obj
+│   │   │   │   │           ├── esp_rom_gpio.c.obj
+│   │   │   │   │           ├── esp_rom_longjmp.S.obj
+│   │   │   │   │           ├── esp_rom_print.c.obj
+│   │   │   │   │           ├── esp_rom_serial_output.c.obj
+│   │   │   │   │           ├── esp_rom_spiflash.c.obj
+│   │   │   │   │           ├── esp_rom_sys.c.obj
+│   │   │   │   │           └── esp_rom_systimer.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_rom.a
+│   │   │   ├── esp_security
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_security.dir
+│   │   │   │   │       └── src
+│   │   │   │   │           ├── esp_crypto_lock.c.obj
+│   │   │   │   │           └── esp_crypto_periph_clk.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_security.a
+│   │   │   ├── esp_stdio
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── esp_system
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_esp_system.dir
+│   │   │   │   │       └── esp_err.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libesp_system.a
+│   │   │   ├── esptool_py
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── freertos
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── hal
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_hal.dir
+│   │   │   │   │       ├── cache_hal.c.obj
+│   │   │   │   │       ├── efuse_hal.c.obj
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   └── efuse_hal.c.obj
+│   │   │   │   │       ├── hal_utils.c.obj
+│   │   │   │   │       └── mmu_hal.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libhal.a
+│   │   │   ├── log
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_log.dir
+│   │   │   │   │       └── src
+│   │   │   │   │           ├── buffer
+│   │   │   │   │           │   └── log_buffers.c.obj
+│   │   │   │   │           ├── log.c.obj
+│   │   │   │   │           ├── log_format_text.c.obj
+│   │   │   │   │           ├── log_print.c.obj
+│   │   │   │   │           ├── log_timestamp_common.c.obj
+│   │   │   │   │           ├── noos
+│   │   │   │   │           │   ├── log_lock.c.obj
+│   │   │   │   │           │   ├── log_timestamp.c.obj
+│   │   │   │   │           │   └── util.c.obj
+│   │   │   │   │           └── util.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── liblog.a
+│   │   │   ├── main
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_main.dir
+│   │   │   │   │       └── bootloader_start.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libmain.a
+│   │   │   ├── micro-ecc
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_micro-ecc.dir
+│   │   │   │   │       └── uECC_verify_antifault.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libmicro-ecc.a
+│   │   │   ├── partition_table
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── soc
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_soc.dir
+│   │   │   │   │       ├── dport_access_common.c.obj
+│   │   │   │   │       ├── esp32s3
+│   │   │   │   │       │   ├── gpio_periph.c.obj
+│   │   │   │   │       │   ├── interrupts.c.obj
+│   │   │   │   │       │   ├── mpi_periph.c.obj
+│   │   │   │   │       │   └── power_supply_periph.c.obj
+│   │   │   │   │       └── lldesc.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libsoc.a
+│   │   │   ├── spi_flash
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── __idf_spi_flash.dir
+│   │   │   │   │       └── spi_flash_wrap.c.obj
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   └── libspi_flash.a
+│   │   │   └── xtensa
+│   │   │       ├── CMakeFiles
+│   │   │       │   └── __idf_xtensa.dir
+│   │   │       │       ├── eri.c.obj
+│   │   │       │       └── xt_trax.c.obj
+│   │   │       ├── cmake_install.cmake
+│   │   │       └── libxtensa.a
+│   │   ├── gdbinit
+│   │   │   ├── connect
+│   │   │   ├── gdbinit
+│   │   │   ├── prefix_map
+│   │   │   ├── py_extensions
+│   │   │   └── symbols
+│   │   ├── hints.yml
+│   │   ├── kconfigs.in
+│   │   ├── kconfigs_projbuild.in
+│   │   ├── ld
+│   │   │   ├── bootloader.memory.ld
+│   │   │   └── bootloader.sections.ld
+│   │   ├── project_description.json
+│   │   ├── project_elf_src_esp32s3.c
+│   │   ├── specs
+│   │   │   └── picolibc.specs
+│   │   └── toolchain
+│   │       ├── asmflags
+│   │       ├── cflags
+│   │       ├── cxxflags
+│   │       ├── ldflags
+│   │       └── toolchain-esp32s3.cmake
+│   ├── bootloader-flash_args
+│   ├── bootloader-prefix
+│   │   ├── src
+│   │   │   └── bootloader-stamp
+│   │   │       ├── bootloader-configure
+│   │   │       ├── bootloader-done
+│   │   │       ├── bootloader-download
+│   │   │       ├── bootloader-mkdir
+│   │   │       ├── bootloader-patch
+│   │   │       ├── bootloader-patch-info.txt
+│   │   │       ├── bootloader-source_dirinfo.txt
+│   │   │       ├── bootloader-update
+│   │   │       └── bootloader-update-info.txt
+│   │   └── tmp
+│   │       ├── bootloader-cfgcmd.txt
+│   │       └── bootloader-mkdirs.cmake
+│   ├── build.ninja
+│   ├── CMakeCache.txt
+│   ├── CMakeFiles
+│   │   ├── 4.4.2
+│   │   │   ├── CMakeASMCompiler.cmake
+│   │   │   ├── CMakeCCompiler.cmake
+│   │   │   ├── CMakeCXXCompiler.cmake
+│   │   │   ├── CMakeDetermineCompilerABI_C.bin
+│   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│   │   │   ├── CMakeSystem.cmake
+│   │   │   ├── CompilerIdASM
+│   │   │   ├── CompilerIdC
+│   │   │   │   ├── a.out
+│   │   │   │   ├── CMakeCCompilerId.c
+│   │   │   │   └── tmp
+│   │   │   └── CompilerIdCXX
+│   │   │       ├── a.out
+│   │   │       ├── CMakeCXXCompilerId.cpp
+│   │   │       └── tmp
+│   │   ├── bootloader-complete
+│   │   ├── bootloader.dir
+│   │   │   ├── Labels.json
+│   │   │   └── Labels.txt
+│   │   ├── clean_additional.cmake
+│   │   ├── cmake.check_cache
+│   │   ├── CMakeConfigureLog.yaml
+│   │   ├── CMakeScratch
+│   │   ├── git-data
+│   │   │   ├── grabRef.cmake
+│   │   │   ├── HEAD
+│   │   │   └── head-ref
+│   │   ├── InstallScripts.json
+│   │   ├── neurodaq-firmware.elf.dir
+│   │   │   └── project_elf_src_esp32s3.c.obj
+│   │   ├── pkgRedirects
+│   │   ├── rules.ninja
+│   │   └── TargetDirectories.txt
+│   ├── cmake_install.cmake
+│   ├── compile_commands.json
+│   ├── config
+│   │   ├── kconfig_menus.json
+│   │   ├── sdkconfig.cmake
+│   │   ├── sdkconfig.h
+│   │   └── sdkconfig.json
+│   ├── config.env
+│   ├── esp-idf
+│   │   ├── app
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_app.dir
+│   │   │   │       └── src
+│   │   │   │           └── app_context.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libapp.a
+│   │   ├── app_trace
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── app_update
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_app_update.dir
+│   │   │   │       └── esp_ota_ops.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libapp_update.a
+│   │   ├── bootloader
+│   │   │   ├── bootloader-flash_args.in
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── bootloader_support
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_bootloader_support.dir
+│   │   │   │       ├── bootloader_flash
+│   │   │   │       │   └── src
+│   │   │   │       │       ├── bootloader_flash.c.obj
+│   │   │   │       │       ├── bootloader_flash_config_esp32s3.c.obj
+│   │   │   │       │       └── flash_qio_mode.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── bootloader_clock_init.c.obj
+│   │   │   │           ├── bootloader_common.c.obj
+│   │   │   │           ├── bootloader_common_loader.c.obj
+│   │   │   │           ├── bootloader_efuse.c.obj
+│   │   │   │           ├── bootloader_mem.c.obj
+│   │   │   │           ├── bootloader_random.c.obj
+│   │   │   │           ├── bootloader_random_esp32s3.c.obj
+│   │   │   │           ├── bootloader_sha.c.obj
+│   │   │   │           ├── bootloader_utility.c.obj
+│   │   │   │           ├── esp32s3
+│   │   │   │           │   └── secure_boot_secure_features.c.obj
+│   │   │   │           ├── esp_image_format.c.obj
+│   │   │   │           ├── flash_encrypt.c.obj
+│   │   │   │           ├── flash_partitions.c.obj
+│   │   │   │           └── secure_boot.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libbootloader_support.a
+│   │   ├── bt
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── carlos-lorenzo__ads1299
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_carlos-lorenzo__ads1299.dir
+│   │   │   │       └── ads1299.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libcarlos-lorenzo__ads1299.a
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── cmock
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_cmock.dir
+│   │   │   │       └── CMock
+│   │   │   │           └── src
+│   │   │   │               └── cmock.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libcmock.a
+│   │   ├── console
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_console.dir
+│   │   │   │       ├── argtable3
+│   │   │   │       │   ├── arg_cmd.c.obj
+│   │   │   │       │   ├── arg_date.c.obj
+│   │   │   │       │   ├── arg_dbl.c.obj
+│   │   │   │       │   ├── arg_dstr.c.obj
+│   │   │   │       │   ├── arg_end.c.obj
+│   │   │   │       │   ├── arg_file.c.obj
+│   │   │   │       │   ├── arg_hashtable.c.obj
+│   │   │   │       │   ├── arg_int.c.obj
+│   │   │   │       │   ├── arg_lit.c.obj
+│   │   │   │       │   ├── arg_rem.c.obj
+│   │   │   │       │   ├── arg_rex.c.obj
+│   │   │   │       │   ├── arg_str.c.obj
+│   │   │   │       │   ├── argtable3.c.obj
+│   │   │   │       │   └── arg_utils.c.obj
+│   │   │   │       ├── commands.c.obj
+│   │   │   │       ├── esp_console_common.c.obj
+│   │   │   │       ├── esp_console_repl_chip.c.obj
+│   │   │   │       ├── esp_console_repl_internal.c.obj
+│   │   │   │       ├── linenoise
+│   │   │   │       │   └── linenoise.c.obj
+│   │   │   │       └── split_argv.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libconsole.a
+│   │   ├── control_plane
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_control_plane.dir
+│   │   │   │       └── src
+│   │   │   │           └── control_server.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libcontrol_plane.a
+│   │   ├── cxx
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_cxx.dir
+│   │   │   │       ├── cxx_exception_stubs.cpp.obj
+│   │   │   │       ├── cxx_guards.cpp.obj
+│   │   │   │       └── cxx_init.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libcxx.a
+│   │   ├── driver
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_driver.dir
+│   │   │   │       ├── i2c
+│   │   │   │       │   └── i2c.c.obj
+│   │   │   │       ├── touch_sensor
+│   │   │   │       │   ├── esp32s3
+│   │   │   │       │   │   └── touch_sensor.c.obj
+│   │   │   │       │   └── touch_sensor_common.c.obj
+│   │   │   │       └── twai
+│   │   │   │           └── twai.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libdriver.a
+│   │   ├── dsp
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_dsp.dir
+│   │   │   │       └── src
+│   │   │   │           ├── biquad.cpp.obj
+│   │   │   │           ├── dsp_task.cpp.obj
+│   │   │   │           └── iir_filter_chain.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libdsp.a
+│   │   ├── eeg_core
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_eeg_core.dir
+│   │   │   │       └── src
+│   │   │   │           ├── frame_pool.cpp.obj
+│   │   │   │           └── status.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libeeg_core.a
+│   │   ├── eeg_manager
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_eeg_manager.dir
+│   │   │   │       └── src
+│   │   │   │           └── eeg_manager.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libeeg_manager.a
+│   │   ├── efuse
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_efuse.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   ├── esp_efuse_fields.c.obj
+│   │   │   │       │   ├── esp_efuse_rtc_calib.c.obj
+│   │   │   │       │   ├── esp_efuse_table.c.obj
+│   │   │   │       │   └── esp_efuse_utility.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── efuse_controller
+│   │   │   │           │   └── keys
+│   │   │   │           │       └── with_key_purposes
+│   │   │   │           │           └── esp_efuse_api_key.c.obj
+│   │   │   │           ├── esp_efuse_api.c.obj
+│   │   │   │           ├── esp_efuse_fields.c.obj
+│   │   │   │           ├── esp_efuse_startup.c.obj
+│   │   │   │           └── esp_efuse_utility.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libefuse.a
+│   │   ├── esp_adc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_adc.dir
+│   │   │   │       ├── adc_cali.c.obj
+│   │   │   │       ├── adc_cali_curve_fitting.c.obj
+│   │   │   │       ├── adc_common.c.obj
+│   │   │   │       ├── adc_continuous.c.obj
+│   │   │   │       ├── adc_filter.c.obj
+│   │   │   │       ├── adc_monitor.c.obj
+│   │   │   │       ├── adc_oneshot.c.obj
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── curve_fitting_coefficients.c.obj
+│   │   │   │       └── gdma
+│   │   │   │           └── adc_dma.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_adc.a
+│   │   ├── esp_app_format
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_app_format.dir
+│   │   │   │       └── esp_app_desc.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_app_format.a
+│   │   ├── esp_blockdev
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_blockdev_util
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_blockdev_util.dir
+│   │   │   │       ├── generic_partition.c.obj
+│   │   │   │       └── memory.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_blockdev_util.a
+│   │   ├── esp_bootloader_format
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_bootloader_format.dir
+│   │   │   │       └── esp_bootloader_desc.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_bootloader_format.a
+│   │   ├── esp_coex
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_coex.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── esp_coex_adapter.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── coexist_debug.c.obj
+│   │   │   │           └── coexist_debug_diagram.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_coex.a
+│   │   ├── esp_common
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_common.dir
+│   │   │   │       └── src
+│   │   │   │           └── esp_err_to_name.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_common.a
+│   │   ├── espcoredump
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_ana_cmpr
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_bitscrambler
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_cam
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_cam.dir
+│   │   │   │       ├── dvp
+│   │   │   │       │   └── src
+│   │   │   │       │       ├── esp_cam_ctlr_dvp_cam.c.obj
+│   │   │   │       │       └── esp_cam_ctlr_dvp_gdma.c.obj
+│   │   │   │       ├── dvp_share_ctrl.c.obj
+│   │   │   │       └── esp_cam_ctlr.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_cam.a
+│   │   ├── esp_driver_dac
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_dma
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_dma.dir
+│   │   │   │       └── src
+│   │   │   │           ├── async_memcpy_gdma.c.obj
+│   │   │   │           ├── esp_async_memcpy.c.obj
+│   │   │   │           ├── esp_dma_utils.c.obj
+│   │   │   │           ├── gdma.c.obj
+│   │   │   │           └── gdma_link.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_dma.a
+│   │   ├── esp_driver_gpio
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_gpio.dir
+│   │   │   │       └── src
+│   │   │   │           ├── dedic_gpio.c.obj
+│   │   │   │           ├── gpio.c.obj
+│   │   │   │           ├── gpio_glitch_filter_ops.c.obj
+│   │   │   │           ├── gpio_pin_glitch_filter.c.obj
+│   │   │   │           └── rtc_io.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_gpio.a
+│   │   ├── esp_driver_gptimer
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_gptimer.dir
+│   │   │   │       └── src
+│   │   │   │           ├── gptimer.c.obj
+│   │   │   │           └── gptimer_common.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_gptimer.a
+│   │   ├── esp_driver_i2c
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_i2c.dir
+│   │   │   │       ├── i2c_common.c.obj
+│   │   │   │       ├── i2c_master.c.obj
+│   │   │   │       └── i2c_slave.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_i2c.a
+│   │   ├── esp_driver_i2s
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_i2s.dir
+│   │   │   │       ├── i2s_common.c.obj
+│   │   │   │       ├── i2s_pdm.c.obj
+│   │   │   │       ├── i2s_platform.c.obj
+│   │   │   │       ├── i2s_std.c.obj
+│   │   │   │       └── i2s_tdm.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_i2s.a
+│   │   ├── esp_driver_i3c
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_isp
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_jpeg
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_ledc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_ledc.dir
+│   │   │   │       └── src
+│   │   │   │           └── ledc.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_ledc.a
+│   │   ├── esp_driver_mcpwm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_mcpwm.dir
+│   │   │   │       └── src
+│   │   │   │           ├── mcpwm_cap.c.obj
+│   │   │   │           ├── mcpwm_cmpr.c.obj
+│   │   │   │           ├── mcpwm_com.c.obj
+│   │   │   │           ├── mcpwm_fault.c.obj
+│   │   │   │           ├── mcpwm_gen.c.obj
+│   │   │   │           ├── mcpwm_oper.c.obj
+│   │   │   │           ├── mcpwm_sync.c.obj
+│   │   │   │           └── mcpwm_timer.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_mcpwm.a
+│   │   ├── esp_driver_parlio
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_pcnt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_pcnt.dir
+│   │   │   │       └── src
+│   │   │   │           └── pulse_cnt.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_pcnt.a
+│   │   ├── esp_driver_ppa
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_rmt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_rmt.dir
+│   │   │   │       └── src
+│   │   │   │           ├── rmt_common.c.obj
+│   │   │   │           ├── rmt_encoder_bytes.c.obj
+│   │   │   │           ├── rmt_encoder.c.obj
+│   │   │   │           ├── rmt_encoder_copy.c.obj
+│   │   │   │           ├── rmt_encoder_simple.c.obj
+│   │   │   │           ├── rmt_rx.c.obj
+│   │   │   │           └── rmt_tx.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_rmt.a
+│   │   ├── esp_driver_sd_intf
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sd_intf.dir
+│   │   │   │       └── sd_host.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_sd_intf.a
+│   │   ├── esp_driver_sdio
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_sdm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sdm.dir
+│   │   │   │       └── src
+│   │   │   │           └── sdm.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_sdm.a
+│   │   ├── esp_driver_sdmmc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sdmmc.dir
+│   │   │   │       ├── legacy
+│   │   │   │       │   └── src
+│   │   │   │       │       ├── sdmmc_host.c.obj
+│   │   │   │       │       └── sdmmc_transaction.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── sd_host_sdmmc.c.obj
+│   │   │   │           └── sd_trans_sdmmc.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_sdmmc.a
+│   │   ├── esp_driver_sdspi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sdspi.dir
+│   │   │   │       └── src
+│   │   │   │           ├── sdspi_crc.c.obj
+│   │   │   │           ├── sdspi_host.c.obj
+│   │   │   │           └── sdspi_transaction.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_sdspi.a
+│   │   ├── esp_driver_spi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_spi.dir
+│   │   │   │       └── src
+│   │   │   │           └── gpspi
+│   │   │   │               ├── spi_common.c.obj
+│   │   │   │               ├── spi_master.c.obj
+│   │   │   │               ├── spi_slave.c.obj
+│   │   │   │               └── spi_slave_hd.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_spi.a
+│   │   ├── esp_driver_touch_sens
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_touch_sens.dir
+│   │   │   │       ├── common
+│   │   │   │       │   └── touch_sens_common.c.obj
+│   │   │   │       └── hw_ver2
+│   │   │   │           └── touch_version_specific.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_touch_sens.a
+│   │   ├── esp_driver_tsens
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_tsens.dir
+│   │   │   │       └── src
+│   │   │   │           └── temperature_sensor.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_tsens.a
+│   │   ├── esp_driver_twai
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_twai.dir
+│   │   │   │       ├── esp_twai.c.obj
+│   │   │   │       └── esp_twai_onchip.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_twai.a
+│   │   ├── esp_driver_uart
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_uart.dir
+│   │   │   │       └── src
+│   │   │   │           ├── uart.c.obj
+│   │   │   │           ├── uart_vfs.c.obj
+│   │   │   │           ├── uart_wakeup.c.obj
+│   │   │   │           └── uhci.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_uart.a
+│   │   ├── esp_driver_usb_serial_jtag
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_usb_serial_jtag.dir
+│   │   │   │       └── src
+│   │   │   │           ├── usb_serial_jtag.c.obj
+│   │   │   │           ├── usb_serial_jtag_connection_monitor.c.obj
+│   │   │   │           └── usb_serial_jtag_vfs.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_driver_usb_serial_jtag.a
+│   │   ├── esp_eth
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_eth.dir
+│   │   │   │       └── src
+│   │   │   │           ├── esp_eth.c.obj
+│   │   │   │           ├── esp_eth_netif_glue.c.obj
+│   │   │   │           └── phy
+│   │   │   │               └── esp_eth_phy_802_3.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_eth.a
+│   │   ├── esp_event
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_event.dir
+│   │   │   │       ├── default_event_loop.c.obj
+│   │   │   │       ├── esp_event.c.obj
+│   │   │   │       └── esp_event_private.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_event.a
+│   │   ├── esp_gdbstub
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_gdbstub.dir
+│   │   │   │       └── src
+│   │   │   │           ├── gdbstub.c.obj
+│   │   │   │           ├── gdbstub_transport.c.obj
+│   │   │   │           ├── packet.c.obj
+│   │   │   │           └── port
+│   │   │   │               └── xtensa
+│   │   │   │                   ├── gdbstub-entry.S.obj
+│   │   │   │                   ├── gdbstub_xtensa.c.obj
+│   │   │   │                   └── xt_debugexception.S.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_gdbstub.a
+│   │   ├── esp_hal_ana_cmpr
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_ana_conv
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_ana_conv.dir
+│   │   │   │       ├── adc_hal.c.obj
+│   │   │   │       ├── adc_hal_common.c.obj
+│   │   │   │       ├── adc_oneshot_hal.c.obj
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   ├── adc_periph.c.obj
+│   │   │   │       │   └── temperature_sensor_periph.c.obj
+│   │   │   │       └── temperature_sensor_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_ana_conv.a
+│   │   ├── esp_hal_cam
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_cam.dir
+│   │   │   │       ├── cam_hal.c.obj
+│   │   │   │       └── esp32s3
+│   │   │   │           └── cam_periph.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_cam.a
+│   │   ├── esp_hal_clock
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_clock.dir
+│   │   │   │       └── esp32s3
+│   │   │   │           └── clk_tree_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_clock.a
+│   │   ├── esp_hal_dma
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_dma.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── gdma_periph.c.obj
+│   │   │   │       ├── gdma_hal_ahb_v1.c.obj
+│   │   │   │       └── gdma_hal_top.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_dma.a
+│   │   ├── esp_hal_gpio
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_gpio.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   ├── dedic_gpio_periph.c.obj
+│   │   │   │       │   ├── rtc_io_periph.c.obj
+│   │   │   │       │   └── sdm_periph.c.obj
+│   │   │   │       ├── gpio_hal.c.obj
+│   │   │   │       ├── rtc_io_hal.c.obj
+│   │   │   │       └── sdm_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_gpio.a
+│   │   ├── esp_hal_gpspi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_gpspi.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── spi_periph.c.obj
+│   │   │   │       ├── spi_hal.c.obj
+│   │   │   │       ├── spi_hal_iram.c.obj
+│   │   │   │       ├── spi_slave_hal.c.obj
+│   │   │   │       ├── spi_slave_hal_iram.c.obj
+│   │   │   │       └── spi_slave_hd_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_gpspi.a
+│   │   ├── esp_hal_i2c
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_i2c.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── i2c_periph.c.obj
+│   │   │   │       ├── i2c_hal.c.obj
+│   │   │   │       └── i2c_hal_iram.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_i2c.a
+│   │   ├── esp_hal_i2s
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_i2s.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── i2s_periph.c.obj
+│   │   │   │       └── i2s_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_i2s.a
+│   │   ├── esp_hal_ieee802154
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_jpeg
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_lcd
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_lcd.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── lcd_periph.c.obj
+│   │   │   │       └── lcd_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_lcd.a
+│   │   ├── esp_hal_ledc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_ledc.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── ledc_periph.c.obj
+│   │   │   │       ├── ledc_hal.c.obj
+│   │   │   │       └── ledc_hal_iram.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_ledc.a
+│   │   ├── esp_hal_mcpwm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_mcpwm.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── mcpwm_periph.c.obj
+│   │   │   │       └── mcpwm_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_mcpwm.a
+│   │   ├── esp_hal_mspi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_mspi.dir
+│   │   │   │       ├── spi_flash_encrypt_hal_iram.c.obj
+│   │   │   │       ├── spi_flash_hal.c.obj
+│   │   │   │       ├── spi_flash_hal_gpspi.c.obj
+│   │   │   │       └── spi_flash_hal_iram.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_mspi.a
+│   │   ├── esp_hal_parlio
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_pcnt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_pcnt.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── pcnt_periph.c.obj
+│   │   │   │       └── pcnt_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_pcnt.a
+│   │   ├── esp_hal_pmu
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_pmu.dir
+│   │   │   │       ├── brownout_hal.c.obj
+│   │   │   │       └── esp32s3
+│   │   │   │           └── rtc_cntl_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_pmu.a
+│   │   ├── esp_hal_ppa
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_rmt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_rmt.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── rmt_periph.c.obj
+│   │   │   │       └── rmt_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_rmt.a
+│   │   ├── esp_hal_rtc_timer
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_sd
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_sd.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── sdmmc_periph.c.obj
+│   │   │   │       └── sdmmc_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_sd.a
+│   │   ├── esp_hal_security
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_security.dir
+│   │   │   │       ├── aes_hal.c.obj
+│   │   │   │       ├── ds_hal.c.obj
+│   │   │   │       ├── hmac_hal.c.obj
+│   │   │   │       ├── mpi_hal.c.obj
+│   │   │   │       ├── mpu_hal.c.obj
+│   │   │   │       └── sha_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_security.a
+│   │   ├── esp_hal_timg
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_timg.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── timer_periph.c.obj
+│   │   │   │       └── timer_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_timg.a
+│   │   ├── esp_hal_touch_sens
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_touch_sens.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   ├── touch_sensor_legacy_hal.c.obj
+│   │   │   │       │   └── touch_sensor_periph.c.obj
+│   │   │   │       ├── touch_sens_hal.c.obj
+│   │   │   │       └── touch_sensor_legacy_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_touch_sens.a
+│   │   ├── esp_hal_twai
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_twai.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── twai_periph.c.obj
+│   │   │   │       └── twai_hal_v1.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_twai.a
+│   │   ├── esp_hal_uart
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_uart.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── uart_periph.c.obj
+│   │   │   │       ├── uart_hal.c.obj
+│   │   │   │       ├── uart_hal_iram.c.obj
+│   │   │   │       └── uhci_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_uart.a
+│   │   ├── esp_hal_usb
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_usb.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── usb_dwc_periph.c.obj
+│   │   │   │       ├── usb_dwc_hal.c.obj
+│   │   │   │       ├── usb_serial_jtag_hal.c.obj
+│   │   │   │       └── usb_wrap_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_usb.a
+│   │   ├── esp_hal_wdt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_wdt.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── mwdt_periph.c.obj
+│   │   │   │       ├── rom_patch.c.obj
+│   │   │   │       └── xt_wdt_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hal_wdt.a
+│   │   ├── esp_hid
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hid.dir
+│   │   │   │       └── src
+│   │   │   │           ├── esp_hid_common.c.obj
+│   │   │   │           ├── esp_hidd.c.obj
+│   │   │   │           └── esp_hidh.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_hid.a
+│   │   ├── esp_http_client
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_http_client.dir
+│   │   │   │       ├── esp_http_client.c.obj
+│   │   │   │       └── lib
+│   │   │   │           ├── http_auth.c.obj
+│   │   │   │           ├── http_header.c.obj
+│   │   │   │           └── http_utils.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_http_client.a
+│   │   ├── esp_http_server
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_http_server.dir
+│   │   │   │       └── src
+│   │   │   │           ├── httpd_main.c.obj
+│   │   │   │           ├── httpd_parse.c.obj
+│   │   │   │           ├── httpd_sess.c.obj
+│   │   │   │           ├── httpd_txrx.c.obj
+│   │   │   │           ├── httpd_uri.c.obj
+│   │   │   │           ├── httpd_ws.c.obj
+│   │   │   │           └── util
+│   │   │   │               └── ctrl_sock.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_http_server.a
+│   │   ├── esp_https_ota
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_https_ota.dir
+│   │   │   │       └── src
+│   │   │   │           └── esp_https_ota.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_https_ota.a
+│   │   ├── esp_https_server
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_https_server.dir
+│   │   │   │       └── src
+│   │   │   │           └── https_server.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_https_server.a
+│   │   ├── esp_hw_support
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hw_support.dir
+│   │   │   │       ├── adc_share_hw_ctrl.c.obj
+│   │   │   │       ├── clk_ctrl_os.c.obj
+│   │   │   │       ├── clk_utils.c.obj
+│   │   │   │       ├── cpu.c.obj
+│   │   │   │       ├── esp_clk.c.obj
+│   │   │   │       ├── esp_clock_output.c.obj
+│   │   │   │       ├── esp_gpio_reserve.c.obj
+│   │   │   │       ├── esp_memory_utils.c.obj
+│   │   │   │       ├── heap_align_hw.c.obj
+│   │   │   │       ├── hw_random.c.obj
+│   │   │   │       ├── intr_alloc.c.obj
+│   │   │   │       ├── lowpower
+│   │   │   │       │   └── port
+│   │   │   │       │       └── esp32s3
+│   │   │   │       │           └── sleep_cpu.c.obj
+│   │   │   │       ├── mac_addr.c.obj
+│   │   │   │       ├── mspi_timing_tuning
+│   │   │   │       │   ├── mspi_timing_tuning.c.obj
+│   │   │   │       │   └── port
+│   │   │   │       │       └── esp32s3
+│   │   │   │       │           ├── mspi_timing_by_mspi_delay.c.obj
+│   │   │   │       │           └── mspi_timing_config.c.obj
+│   │   │   │       ├── periph_ctrl.c.obj
+│   │   │   │       ├── port
+│   │   │   │       │   ├── esp32s3
+│   │   │   │       │   │   ├── chip_info.c.obj
+│   │   │   │       │   │   ├── cpu_region_protect.c.obj
+│   │   │   │       │   │   ├── esp_clk_tree.c.obj
+│   │   │   │       │   │   ├── esp_cpu_intr.c.obj
+│   │   │   │       │   │   ├── esp_memprot.c.obj
+│   │   │   │       │   │   ├── io_mux.c.obj
+│   │   │   │       │   │   ├── rtc_clk.c.obj
+│   │   │   │       │   │   ├── rtc_clk_init.c.obj
+│   │   │   │       │   │   ├── rtc_init.c.obj
+│   │   │   │       │   │   ├── rtc_sleep.c.obj
+│   │   │   │       │   │   ├── rtc_time.c.obj
+│   │   │   │       │   │   ├── sar_periph_ctrl.c.obj
+│   │   │   │       │   │   └── systimer.c.obj
+│   │   │   │       │   ├── esp_clk_tree_common.c.obj
+│   │   │   │       │   └── esp_memprot_conv.c.obj
+│   │   │   │       ├── power_supply
+│   │   │   │       │   └── brownout.c.obj
+│   │   │   │       ├── regi2c_ctrl.c.obj
+│   │   │   │       ├── revision.c.obj
+│   │   │   │       ├── rtc_module.c.obj
+│   │   │   │       ├── sar_tsens_ctrl.c.obj
+│   │   │   │       ├── sleep_console.c.obj
+│   │   │   │       ├── sleep_event.c.obj
+│   │   │   │       ├── sleep_gpio.c.obj
+│   │   │   │       ├── sleep_modem.c.obj
+│   │   │   │       ├── sleep_modes.c.obj
+│   │   │   │       ├── sleep_mspi.c.obj
+│   │   │   │       ├── sleep_uart.c.obj
+│   │   │   │       ├── sleep_usb.c.obj
+│   │   │   │       ├── sleep_wake_stub.c.obj
+│   │   │   │       ├── spi_bus_lock.c.obj
+│   │   │   │       ├── spi_share_hw_ctrl.c.obj
+│   │   │   │       └── usb_phy
+│   │   │   │           └── usb_phy.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── libesp_hw_support.a
+│   │   │   ├── lowpower
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── mspi_timing_tuning
+│   │   │   │   └── port
+│   │   │   │       └── esp32s3
+│   │   │   │           ├── CMakeFiles
+│   │   │   │           └── cmake_install.cmake
+│   │   │   └── port
+│   │   │       └── esp32s3
+│   │   │           ├── CMakeFiles
+│   │   │           └── cmake_install.cmake
+│   │   ├── esp_lcd
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_lcd.dir
+│   │   │   │       ├── i2c
+│   │   │   │       │   └── esp_lcd_panel_io_i2c.c.obj
+│   │   │   │       ├── i80
+│   │   │   │       │   └── esp_lcd_panel_io_i80.c.obj
+│   │   │   │       ├── rgb
+│   │   │   │       │   └── esp_lcd_panel_rgb.c.obj
+│   │   │   │       ├── spi
+│   │   │   │       │   └── esp_lcd_panel_io_spi.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── esp_lcd_common.c.obj
+│   │   │   │           ├── esp_lcd_panel_io.c.obj
+│   │   │   │           ├── esp_lcd_panel_ops.c.obj
+│   │   │   │           ├── esp_lcd_panel_ssd1306.c.obj
+│   │   │   │           └── esp_lcd_panel_st7789.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_lcd.a
+│   │   ├── esp_libc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_libc.dir
+│   │   │   │       └── src
+│   │   │   │           ├── abort.c.obj
+│   │   │   │           ├── assert.c.obj
+│   │   │   │           ├── getentropy.c.obj
+│   │   │   │           ├── heap.c.obj
+│   │   │   │           ├── init.c.obj
+│   │   │   │           ├── locks.c.obj
+│   │   │   │           ├── picolibc
+│   │   │   │           │   ├── bufio_setvbuf.c.obj
+│   │   │   │           │   ├── errno.c.obj
+│   │   │   │           │   ├── fopencookie.c.obj
+│   │   │   │           │   ├── getreent.c.obj
+│   │   │   │           │   ├── open_memstream.c.obj
+│   │   │   │           │   ├── picolibc_init.c.obj
+│   │   │   │           │   └── rand.c.obj
+│   │   │   │           ├── poll.c.obj
+│   │   │   │           ├── port
+│   │   │   │           │   └── esp_time_impl.c.obj
+│   │   │   │           ├── pthread.c.obj
+│   │   │   │           ├── random.c.obj
+│   │   │   │           ├── realpath.c.obj
+│   │   │   │           ├── reent_syscalls.c.obj
+│   │   │   │           ├── scandir.c.obj
+│   │   │   │           ├── stdatomic.c.obj
+│   │   │   │           ├── syscalls.c.obj
+│   │   │   │           ├── sysconf.c.obj
+│   │   │   │           ├── termios.c.obj
+│   │   │   │           └── time.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── libesp_libc.a
+│   │   │   └── src
+│   │   │       └── port
+│   │   │           ├── CMakeFiles
+│   │   │           └── cmake_install.cmake
+│   │   ├── esp_local_ctrl
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_local_ctrl.dir
+│   │   │   │       ├── proto-c
+│   │   │   │       │   └── esp_local_ctrl.pb-c.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── esp_local_ctrl.c.obj
+│   │   │   │           ├── esp_local_ctrl_handler.c.obj
+│   │   │   │           └── esp_local_ctrl_transport_httpd.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_local_ctrl.a
+│   │   ├── esp_mm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_mm.dir
+│   │   │   │       ├── esp_cache_msync.c.obj
+│   │   │   │       ├── esp_cache_utils.c.obj
+│   │   │   │       ├── esp_mmu_map.c.obj
+│   │   │   │       └── port
+│   │   │   │           └── esp32s3
+│   │   │   │               └── ext_mem_layout.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_mm.a
+│   │   ├── esp_netif
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_netif.dir
+│   │   │   │       ├── esp_netif_defaults.c.obj
+│   │   │   │       ├── esp_netif_handlers.c.obj
+│   │   │   │       ├── esp_netif_objects.c.obj
+│   │   │   │       └── lwip
+│   │   │   │           ├── esp_netif_lwip.c.obj
+│   │   │   │           ├── esp_netif_lwip_defaults.c.obj
+│   │   │   │           ├── esp_netif_sntp.c.obj
+│   │   │   │           └── netif
+│   │   │   │               ├── esp_pbuf_ref.c.obj
+│   │   │   │               ├── ethernetif.c.obj
+│   │   │   │               └── wlanif.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_netif.a
+│   │   ├── esp_netif_stack
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_partition
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_partition.dir
+│   │   │   │       ├── partition.c.obj
+│   │   │   │       └── partition_target.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_partition.a
+│   │   ├── esp_phy
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_phy.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── phy_init_data.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── btbb_init.c.obj
+│   │   │   │           ├── lib_printf.c.obj
+│   │   │   │           ├── phy_common.c.obj
+│   │   │   │           ├── phy_init.c.obj
+│   │   │   │           └── phy_override.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_phy.a
+│   │   ├── esp_pm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_pm.dir
+│   │   │   │       ├── pm_impl.c.obj
+│   │   │   │       ├── pm_locks.c.obj
+│   │   │   │       └── pm_trace.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_pm.a
+│   │   ├── esp_psram
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_psram.dir
+│   │   │   │       └── system_layer
+│   │   │   │           └── esp_psram_mspi.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_psram.a
+│   │   ├── esp_ringbuf
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_ringbuf.dir
+│   │   │   │       └── ringbuf.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_ringbuf.a
+│   │   ├── esp_rom
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_rom.dir
+│   │   │   │       └── patches
+│   │   │   │           ├── esp_rom_cache_esp32s2_esp32s3.c.obj
+│   │   │   │           ├── esp_rom_cache_writeback_esp32s3.S.obj
+│   │   │   │           ├── esp_rom_crc.c.obj
+│   │   │   │           ├── esp_rom_efuse.c.obj
+│   │   │   │           ├── esp_rom_gpio.c.obj
+│   │   │   │           ├── esp_rom_longjmp.S.obj
+│   │   │   │           ├── esp_rom_print.c.obj
+│   │   │   │           ├── esp_rom_serial_output.c.obj
+│   │   │   │           ├── esp_rom_spiflash.c.obj
+│   │   │   │           ├── esp_rom_sys.c.obj
+│   │   │   │           └── esp_rom_systimer.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_rom.a
+│   │   ├── esp_security
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_security.dir
+│   │   │   │       └── src
+│   │   │   │           ├── esp_crypto_lock.c.obj
+│   │   │   │           ├── esp_crypto_periph_clk.c.obj
+│   │   │   │           ├── esp_ds.c.obj
+│   │   │   │           ├── esp_hmac.c.obj
+│   │   │   │           └── init.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_security.a
+│   │   ├── esp_stdio
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_stdio.dir
+│   │   │   │       ├── stdio_simple.c.obj
+│   │   │   │       ├── stdio_syscalls_simple.c.obj
+│   │   │   │       └── stdio_vfs.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_stdio.a
+│   │   ├── esp_system
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_system.dir
+│   │   │   │       ├── crosscore_int.c.obj
+│   │   │   │       ├── esp_err.c.obj
+│   │   │   │       ├── esp_ipc.c.obj
+│   │   │   │       ├── esp_system.c.obj
+│   │   │   │       ├── freertos_hooks.c.obj
+│   │   │   │       ├── int_wdt.c.obj
+│   │   │   │       ├── panic.c.obj
+│   │   │   │       ├── port
+│   │   │   │       │   ├── arch
+│   │   │   │       │   │   └── xtensa
+│   │   │   │       │   │       ├── debug_helpers_asm.S.obj
+│   │   │   │       │   │       ├── debug_helpers.c.obj
+│   │   │   │       │   │       ├── debug_stubs.c.obj
+│   │   │   │       │   │       ├── esp_ipc_isr_handler.S.obj
+│   │   │   │       │   │       ├── esp_ipc_isr_port.c.obj
+│   │   │   │       │   │       ├── esp_ipc_isr_routines.S.obj
+│   │   │   │       │   │       ├── expression_with_stack_asm.S.obj
+│   │   │   │       │   │       ├── expression_with_stack.c.obj
+│   │   │   │       │   │       ├── panic_arch.c.obj
+│   │   │   │       │   │       ├── panic_handler_asm.S.obj
+│   │   │   │       │   │       └── trax.c.obj
+│   │   │   │       │   ├── cpu_start.c.obj
+│   │   │   │       │   ├── esp_ipc_isr.c.obj
+│   │   │   │       │   ├── esp_system_chip.c.obj
+│   │   │   │       │   ├── image_process.c.obj
+│   │   │   │       │   ├── panic_handler.c.obj
+│   │   │   │       │   └── soc
+│   │   │   │       │       └── esp32s3
+│   │   │   │       │           ├── apb_backup_dma.c.obj
+│   │   │   │       │           ├── cache_err_int.c.obj
+│   │   │   │       │           ├── clk.c.obj
+│   │   │   │       │           ├── highint_hdl.S.obj
+│   │   │   │       │           ├── reset_reason.c.obj
+│   │   │   │       │           └── system_internal.c.obj
+│   │   │   │       ├── stack_check.c.obj
+│   │   │   │       ├── startup.c.obj
+│   │   │   │       ├── startup_funcs.c.obj
+│   │   │   │       ├── system_time.c.obj
+│   │   │   │       ├── task_wdt
+│   │   │   │       │   ├── task_wdt.c.obj
+│   │   │   │       │   └── task_wdt_impl_timergroup.c.obj
+│   │   │   │       ├── ubsan.c.obj
+│   │   │   │       └── xt_wdt.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── ld
+│   │   │   │   ├── memory.ld
+│   │   │   │   ├── sections.ld
+│   │   │   │   └── sections.ld.in
+│   │   │   ├── libesp_system.a
+│   │   │   └── port
+│   │   │       ├── CMakeFiles
+│   │   │       ├── cmake_install.cmake
+│   │   │       └── soc
+│   │   │           └── esp32s3
+│   │   │               ├── CMakeFiles
+│   │   │               └── cmake_install.cmake
+│   │   ├── esp_timer
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_timer.dir
+│   │   │   │       └── src
+│   │   │   │           ├── esp_timer.c.obj
+│   │   │   │           ├── esp_timer_impl_common.c.obj
+│   │   │   │           ├── esp_timer_impl_systimer.c.obj
+│   │   │   │           ├── esp_timer_init.c.obj
+│   │   │   │           ├── ets_timer_legacy.c.obj
+│   │   │   │           └── system_time.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_timer.a
+│   │   ├── esp-tls
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp-tls.dir
+│   │   │   │       ├── esp_tls.c.obj
+│   │   │   │       ├── esp-tls-crypto
+│   │   │   │       │   └── esp_tls_crypto.c.obj
+│   │   │   │       ├── esp_tls_error_capture.c.obj
+│   │   │   │       ├── esp_tls_mbedtls.c.obj
+│   │   │   │       └── esp_tls_platform_port.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp-tls.a
+│   │   ├── esptool_py
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_trace
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_usb_cdc_rom_console
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_wifi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_wifi.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── esp_adapter.c.obj
+│   │   │   │       ├── regulatory
+│   │   │   │       │   └── esp_wifi_regulatory.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── lib_printf.c.obj
+│   │   │   │           ├── mesh_event.c.obj
+│   │   │   │           ├── smartconfig_ack.c.obj
+│   │   │   │           ├── smartconfig.c.obj
+│   │   │   │           ├── wifi_default_ap.c.obj
+│   │   │   │           ├── wifi_default.c.obj
+│   │   │   │           ├── wifi_init.c.obj
+│   │   │   │           └── wifi_netif.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libesp_wifi.a
+│   │   ├── fatfs
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_fatfs.dir
+│   │   │   │       ├── diskio
+│   │   │   │       │   ├── diskio.c.obj
+│   │   │   │       │   ├── diskio_rawflash.c.obj
+│   │   │   │       │   ├── diskio_sdmmc.c.obj
+│   │   │   │       │   └── diskio_wl.c.obj
+│   │   │   │       ├── port
+│   │   │   │       │   └── freertos
+│   │   │   │       │       └── ffsystem.c.obj
+│   │   │   │       ├── src
+│   │   │   │       │   ├── ff.c.obj
+│   │   │   │       │   └── ffunicode.c.obj
+│   │   │   │       └── vfs
+│   │   │   │           ├── vfs_fat.c.obj
+│   │   │   │           ├── vfs_fat_sdmmc.c.obj
+│   │   │   │           └── vfs_fat_spiflash.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libfatfs.a
+│   │   ├── freertos
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_freertos.dir
+│   │   │   │       ├── app_startup.c.obj
+│   │   │   │       ├── esp_additions
+│   │   │   │       │   ├── idf_additions.c.obj
+│   │   │   │       │   └── idf_additions_event_groups.c.obj
+│   │   │   │       ├── FreeRTOS-Kernel
+│   │   │   │       │   ├── event_groups.c.obj
+│   │   │   │       │   ├── list.c.obj
+│   │   │   │       │   ├── portable
+│   │   │   │       │   │   └── xtensa
+│   │   │   │       │   │       ├── portasm.S.obj
+│   │   │   │       │   │       ├── port.c.obj
+│   │   │   │       │   │       ├── xtensa_init.c.obj
+│   │   │   │       │   │       └── xtensa_overlay_os_hook.c.obj
+│   │   │   │       │   ├── queue.c.obj
+│   │   │   │       │   ├── stream_buffer.c.obj
+│   │   │   │       │   ├── tasks.c.obj
+│   │   │   │       │   └── timers.c.obj
+│   │   │   │       ├── heap_idf.c.obj
+│   │   │   │       ├── port_common.c.obj
+│   │   │   │       └── port_systick.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libfreertos.a
+│   │   ├── hal
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_hal.dir
+│   │   │   │       ├── cache_hal.c.obj
+│   │   │   │       ├── color_hal.c.obj
+│   │   │   │       ├── efuse_hal.c.obj
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── efuse_hal.c.obj
+│   │   │   │       ├── hal_utils.c.obj
+│   │   │   │       ├── mmu_hal.c.obj
+│   │   │   │       └── systimer_hal.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libhal.a
+│   │   ├── heap
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_heap.dir
+│   │   │   │       ├── heap_caps_base.c.obj
+│   │   │   │       ├── heap_caps.c.obj
+│   │   │   │       ├── heap_caps_init.c.obj
+│   │   │   │       ├── multi_heap.c.obj
+│   │   │   │       ├── port
+│   │   │   │       │   ├── esp32s3
+│   │   │   │       │   │   └── memory_layout.c.obj
+│   │   │   │       │   └── memory_layout_utils.c.obj
+│   │   │   │       └── tlsf
+│   │   │   │           └── tlsf.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libheap.a
+│   │   ├── http_parser
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_http_parser.dir
+│   │   │   │       └── http_parser.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libhttp_parser.a
+│   │   ├── idf_test
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── ieee802154
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── log
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_log.dir
+│   │   │   │       └── src
+│   │   │   │           ├── buffer
+│   │   │   │           │   └── log_buffers.c.obj
+│   │   │   │           ├── log.c.obj
+│   │   │   │           ├── log_format_text.c.obj
+│   │   │   │           ├── log_level
+│   │   │   │           │   ├── log_level.c.obj
+│   │   │   │           │   └── tag_log_level
+│   │   │   │           │       ├── cache
+│   │   │   │           │       │   └── log_binary_heap.c.obj
+│   │   │   │           │       ├── linked_list
+│   │   │   │           │       │   └── log_linked_list.c.obj
+│   │   │   │           │       └── tag_log_level.c.obj
+│   │   │   │           ├── log_print.c.obj
+│   │   │   │           ├── log_timestamp_common.c.obj
+│   │   │   │           ├── os
+│   │   │   │           │   ├── log_lock.c.obj
+│   │   │   │           │   ├── log_timestamp.c.obj
+│   │   │   │           │   ├── log_write.c.obj
+│   │   │   │           │   └── util.c.obj
+│   │   │   │           └── util.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── liblog.a
+│   │   ├── lwip
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_lwip.dir
+│   │   │   │       ├── apps
+│   │   │   │       │   ├── dhcpserver
+│   │   │   │       │   │   └── dhcpserver.c.obj
+│   │   │   │       │   ├── ping
+│   │   │   │       │   │   └── ping_sock.c.obj
+│   │   │   │       │   └── sntp
+│   │   │   │       │       └── sntp.c.obj
+│   │   │   │       ├── lwip
+│   │   │   │       │   └── src
+│   │   │   │       │       ├── api
+│   │   │   │       │       │   ├── api_lib.c.obj
+│   │   │   │       │       │   ├── api_msg.c.obj
+│   │   │   │       │       │   ├── err.c.obj
+│   │   │   │       │       │   ├── if_api.c.obj
+│   │   │   │       │       │   ├── netbuf.c.obj
+│   │   │   │       │       │   ├── netdb.c.obj
+│   │   │   │       │       │   ├── netifapi.c.obj
+│   │   │   │       │       │   ├── sockets.c.obj
+│   │   │   │       │       │   └── tcpip.c.obj
+│   │   │   │       │       ├── apps
+│   │   │   │       │       │   ├── netbiosns
+│   │   │   │       │       │   │   └── netbiosns.c.obj
+│   │   │   │       │       │   └── sntp
+│   │   │   │       │       │       └── sntp.c.obj
+│   │   │   │       │       ├── core
+│   │   │   │       │       │   ├── def.c.obj
+│   │   │   │       │       │   ├── dns.c.obj
+│   │   │   │       │       │   ├── inet_chksum.c.obj
+│   │   │   │       │       │   ├── init.c.obj
+│   │   │   │       │       │   ├── ip.c.obj
+│   │   │   │       │       │   ├── ipv4
+│   │   │   │       │       │   │   ├── autoip.c.obj
+│   │   │   │       │       │   │   ├── dhcp.c.obj
+│   │   │   │       │       │   │   ├── etharp.c.obj
+│   │   │   │       │       │   │   ├── icmp.c.obj
+│   │   │   │       │       │   │   ├── igmp.c.obj
+│   │   │   │       │       │   │   ├── ip4_addr.c.obj
+│   │   │   │       │       │   │   ├── ip4.c.obj
+│   │   │   │       │       │   │   ├── ip4_frag.c.obj
+│   │   │   │       │       │   │   └── ip4_napt.c.obj
+│   │   │   │       │       │   ├── ipv6
+│   │   │   │       │       │   │   ├── dhcp6.c.obj
+│   │   │   │       │       │   │   ├── ethip6.c.obj
+│   │   │   │       │       │   │   ├── icmp6.c.obj
+│   │   │   │       │       │   │   ├── inet6.c.obj
+│   │   │   │       │       │   │   ├── ip6_addr.c.obj
+│   │   │   │       │       │   │   ├── ip6.c.obj
+│   │   │   │       │       │   │   ├── ip6_frag.c.obj
+│   │   │   │       │       │   │   ├── mld6.c.obj
+│   │   │   │       │       │   │   └── nd6.c.obj
+│   │   │   │       │       │   ├── mem.c.obj
+│   │   │   │       │       │   ├── memp.c.obj
+│   │   │   │       │       │   ├── netif.c.obj
+│   │   │   │       │       │   ├── pbuf.c.obj
+│   │   │   │       │       │   ├── raw.c.obj
+│   │   │   │       │       │   ├── stats.c.obj
+│   │   │   │       │       │   ├── sys.c.obj
+│   │   │   │       │       │   ├── tcp.c.obj
+│   │   │   │       │       │   ├── tcp_in.c.obj
+│   │   │   │       │       │   ├── tcp_out.c.obj
+│   │   │   │       │       │   ├── timeouts.c.obj
+│   │   │   │       │       │   └── udp.c.obj
+│   │   │   │       │       └── netif
+│   │   │   │       │           ├── bridgeif.c.obj
+│   │   │   │       │           ├── bridgeif_fdb.c.obj
+│   │   │   │       │           ├── ethernet.c.obj
+│   │   │   │       │           ├── ppp
+│   │   │   │       │           │   ├── auth.c.obj
+│   │   │   │       │           │   ├── ccp.c.obj
+│   │   │   │       │           │   ├── chap-md5.c.obj
+│   │   │   │       │           │   ├── chap_ms.c.obj
+│   │   │   │       │           │   ├── chap-new.c.obj
+│   │   │   │       │           │   ├── demand.c.obj
+│   │   │   │       │           │   ├── eap.c.obj
+│   │   │   │       │           │   ├── ecp.c.obj
+│   │   │   │       │           │   ├── eui64.c.obj
+│   │   │   │       │           │   ├── fsm.c.obj
+│   │   │   │       │           │   ├── ipcp.c.obj
+│   │   │   │       │           │   ├── ipv6cp.c.obj
+│   │   │   │       │           │   ├── lcp.c.obj
+│   │   │   │       │           │   ├── magic.c.obj
+│   │   │   │       │           │   ├── mppe.c.obj
+│   │   │   │       │           │   ├── multilink.c.obj
+│   │   │   │       │           │   ├── polarssl
+│   │   │   │       │           │   │   ├── arc4.c.obj
+│   │   │   │       │           │   │   ├── des.c.obj
+│   │   │   │       │           │   │   ├── md4.c.obj
+│   │   │   │       │           │   │   ├── md5.c.obj
+│   │   │   │       │           │   │   └── sha1.c.obj
+│   │   │   │       │           │   ├── pppapi.c.obj
+│   │   │   │       │           │   ├── ppp.c.obj
+│   │   │   │       │           │   ├── pppcrypt.c.obj
+│   │   │   │       │           │   ├── pppoe.c.obj
+│   │   │   │       │           │   ├── pppol2tp.c.obj
+│   │   │   │       │           │   ├── pppos.c.obj
+│   │   │   │       │           │   ├── upap.c.obj
+│   │   │   │       │           │   ├── utils.c.obj
+│   │   │   │       │           │   └── vj.c.obj
+│   │   │   │       │           └── slipif.c.obj
+│   │   │   │       └── port
+│   │   │   │           ├── acd_dhcp_check.c.obj
+│   │   │   │           ├── debug
+│   │   │   │           │   └── lwip_debug.c.obj
+│   │   │   │           ├── esp32xx
+│   │   │   │           │   └── vfs_lwip.c.obj
+│   │   │   │           ├── freertos
+│   │   │   │           │   └── sys_arch.c.obj
+│   │   │   │           ├── hooks
+│   │   │   │           │   ├── lwip_default_hooks.c.obj
+│   │   │   │           │   └── tcp_isn_default.c.obj
+│   │   │   │           ├── if_index.c.obj
+│   │   │   │           └── sockets_ext.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── liblwip.a
+│   │   ├── main
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_main.dir
+│   │   │   │       └── main.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libmain.a
+│   │   ├── mbedtls
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_mbedtls.dir
+│   │   │   │       ├── __
+│   │   │   │       │   └── __
+│   │   │   │       │       └── x509_crt_bundle.S.obj
+│   │   │   │       ├── esp_crt_bundle
+│   │   │   │       │   └── esp_crt_bundle.c.obj
+│   │   │   │       └── port
+│   │   │   │           └── esp_mem.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── libmbedtls.a
+│   │   │   ├── mbedtls
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   ├── cmake_install.cmake
+│   │   │   │   ├── include
+│   │   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── cmake_install.cmake
+│   │   │   │   ├── library
+│   │   │   │   │   ├── CMakeFiles
+│   │   │   │   │   │   ├── mbedtls.dir
+│   │   │   │   │   │   │   ├── debug.c.obj
+│   │   │   │   │   │   │   ├── mps_reader.c.obj
+│   │   │   │   │   │   │   ├── mps_trace.c.obj
+│   │   │   │   │   │   │   ├── opt
+│   │   │   │   │   │   │   │   └── esp-idf
+│   │   │   │   │   │   │   │       └── components
+│   │   │   │   │   │   │   │           └── mbedtls
+│   │   │   │   │   │   │   │               └── port
+│   │   │   │   │   │   │   │                   ├── esp_platform_time.c.obj
+│   │   │   │   │   │   │   │                   ├── esp_psa_crypto_init.c.obj
+│   │   │   │   │   │   │   │                   ├── esp_timing.c.obj
+│   │   │   │   │   │   │   │                   ├── mbedtls_debug.c.obj
+│   │   │   │   │   │   │   │                   └── net_sockets.c.obj
+│   │   │   │   │   │   │   ├── ssl_cache.c.obj
+│   │   │   │   │   │   │   ├── ssl_ciphersuites.c.obj
+│   │   │   │   │   │   │   ├── ssl_client.c.obj
+│   │   │   │   │   │   │   ├── ssl_cookie.c.obj
+│   │   │   │   │   │   │   ├── ssl_debug_helpers_generated.c.obj
+│   │   │   │   │   │   │   ├── ssl_msg.c.obj
+│   │   │   │   │   │   │   ├── ssl_ticket.c.obj
+│   │   │   │   │   │   │   ├── ssl_tls12_client.c.obj
+│   │   │   │   │   │   │   ├── ssl_tls12_server.c.obj
+│   │   │   │   │   │   │   ├── ssl_tls13_client.c.obj
+│   │   │   │   │   │   │   ├── ssl_tls13_generic.c.obj
+│   │   │   │   │   │   │   ├── ssl_tls13_keys.c.obj
+│   │   │   │   │   │   │   ├── ssl_tls13_server.c.obj
+│   │   │   │   │   │   │   ├── ssl_tls.c.obj
+│   │   │   │   │   │   │   ├── timing.c.obj
+│   │   │   │   │   │   │   ├── version.c.obj
+│   │   │   │   │   │   │   └── version_features.c.obj
+│   │   │   │   │   │   └── mbedx509.dir
+│   │   │   │   │   │       ├── error.c.obj
+│   │   │   │   │   │       ├── mbedtls_config.c.obj
+│   │   │   │   │   │       ├── pkcs7.c.obj
+│   │   │   │   │   │       ├── x509.c.obj
+│   │   │   │   │   │       ├── x509_create.c.obj
+│   │   │   │   │   │       ├── x509_crl.c.obj
+│   │   │   │   │   │       ├── x509_crt.c.obj
+│   │   │   │   │   │       ├── x509_csr.c.obj
+│   │   │   │   │   │       ├── x509_oid.c.obj
+│   │   │   │   │   │       ├── x509write.c.obj
+│   │   │   │   │   │       ├── x509write_crt.c.obj
+│   │   │   │   │   │       └── x509write_csr.c.obj
+│   │   │   │   │   ├── cmake_install.cmake
+│   │   │   │   │   ├── libmbedcrypto.a
+│   │   │   │   │   ├── libmbedtls.a
+│   │   │   │   │   ├── libmbedx509.a
+│   │   │   │   │   └── libtfpsacrypto.a
+│   │   │   │   ├── pkgconfig
+│   │   │   │   │   ├── CMakeFiles
+│   │   │   │   │   └── cmake_install.cmake
+│   │   │   │   └── tf-psa-crypto
+│   │   │   │       ├── CMakeFiles
+│   │   │   │       ├── cmake_install.cmake
+│   │   │   │       ├── core
+│   │   │   │       │   ├── CMakeFiles
+│   │   │   │       │   │   └── tfpsacrypto.dir
+│   │   │   │       │   │       ├── opt
+│   │   │   │       │   │       │   └── esp-idf
+│   │   │   │       │   │       │       └── components
+│   │   │   │       │   │       │           └── mbedtls
+│   │   │   │       │   │       │               └── port
+│   │   │   │       │   │       │                   ├── aes
+│   │   │   │       │   │       │                   │   ├── dma
+│   │   │   │       │   │       │                   │   │   ├── esp_aes_dma_core.c.obj
+│   │   │   │       │   │       │                   │   │   └── esp_aes_gdma_impl.c.obj
+│   │   │   │       │   │       │                   │   ├── esp_aes.c.obj
+│   │   │   │       │   │       │                   │   ├── esp_aes_common.c.obj
+│   │   │   │       │   │       │                   │   ├── esp_aes_gcm.c.obj
+│   │   │   │       │   │       │                   │   └── esp_aes_xts.c.obj
+│   │   │   │       │   │       │                   ├── bignum
+│   │   │   │       │   │       │                   │   ├── bignum_alt.c.obj
+│   │   │   │       │   │       │                   │   └── esp_bignum.c.obj
+│   │   │   │       │   │       │                   ├── crypto_shared_gdma
+│   │   │   │       │   │       │                   │   └── esp_crypto_shared_gdma.c.obj
+│   │   │   │       │   │       │                   ├── esp_hardware.c.obj
+│   │   │   │       │   │       │                   ├── esp_hmac_pbkdf2.c.obj
+│   │   │   │       │   │       │                   ├── psa_crypto_storage
+│   │   │   │       │   │       │                   │   └── esp_psa_its.c.obj
+│   │   │   │       │   │       │                   ├── psa_driver
+│   │   │   │       │   │       │                   │   ├── esp_aes
+│   │   │   │       │   │       │                   │   │   ├── psa_crypto_driver_esp_aes.c.obj
+│   │   │   │       │   │       │                   │   │   └── psa_crypto_driver_esp_aes_gcm.c.obj
+│   │   │   │       │   │       │                   │   ├── esp_mac
+│   │   │   │       │   │       │                   │   │   ├── psa_crypto_driver_esp_cmac.c.obj
+│   │   │   │       │   │       │                   │   │   ├── psa_crypto_driver_esp_hmac_opaque.c.obj
+│   │   │   │       │   │       │                   │   │   └── psa_crypto_driver_esp_hmac_transparent.c.obj
+│   │   │   │       │   │       │                   │   ├── esp_md
+│   │   │   │       │   │       │                   │   │   └── psa_crypto_driver_esp_md5.c.obj
+│   │   │   │       │   │       │                   │   ├── esp_rsa_ds
+│   │   │   │       │   │       │                   │   │   ├── psa_crypto_driver_esp_rsa_ds.c.obj
+│   │   │   │       │   │       │                   │   │   └── psa_crypto_driver_esp_rsa_ds_utilities.c.obj
+│   │   │   │       │   │       │                   │   └── esp_sha
+│   │   │   │       │   │       │                   │       ├── core
+│   │   │   │       │   │       │                   │       │   ├── psa_crypto_driver_esp_sha1.c.obj
+│   │   │   │       │   │       │                   │       │   ├── psa_crypto_driver_esp_sha256.c.obj
+│   │   │   │       │   │       │                   │       │   └── psa_crypto_driver_esp_sha512.c.obj
+│   │   │   │       │   │       │                   │       └── psa_crypto_driver_esp_sha.c.obj
+│   │   │   │       │   │       │                   └── sha
+│   │   │   │       │   │       │                       ├── core
+│   │   │   │       │   │       │                       │   ├── esp_sha_gdma_impl.c.obj
+│   │   │   │       │   │       │                       │   └── sha.c.obj
+│   │   │   │       │   │       │                       └── esp_sha.c.obj
+│   │   │   │       │   │       ├── psa_crypto_client.c.obj
+│   │   │   │       │   │       ├── psa_crypto.c.obj
+│   │   │   │       │   │       ├── psa_crypto_driver_wrappers_no_static.c.obj
+│   │   │   │       │   │       ├── psa_crypto_random.c.obj
+│   │   │   │       │   │       ├── psa_crypto_slot_management.c.obj
+│   │   │   │       │   │       ├── psa_crypto_storage.c.obj
+│   │   │   │       │   │       ├── psa_its_file.c.obj
+│   │   │   │       │   │       ├── psa_util.c.obj
+│   │   │   │       │   │       ├── tf_psa_crypto_config.c.obj
+│   │   │   │       │   │       └── tf_psa_crypto_version.c.obj
+│   │   │   │       │   ├── cmake_install.cmake
+│   │   │   │       │   └── libtfpsacrypto.a
+│   │   │   │       ├── drivers
+│   │   │   │       │   ├── builtin
+│   │   │   │       │   │   ├── CMakeFiles
+│   │   │   │       │   │   │   └── builtin.dir
+│   │   │   │       │   │   │       └── src
+│   │   │   │       │   │   │           ├── aesce.c.obj
+│   │   │   │       │   │   │           ├── aes.c.obj
+│   │   │   │       │   │   │           ├── aesni.c.obj
+│   │   │   │       │   │   │           ├── aria.c.obj
+│   │   │   │       │   │   │           ├── bignum.c.obj
+│   │   │   │       │   │   │           ├── bignum_core.c.obj
+│   │   │   │       │   │   │           ├── bignum_mod.c.obj
+│   │   │   │       │   │   │           ├── bignum_mod_raw.c.obj
+│   │   │   │       │   │   │           ├── block_cipher.c.obj
+│   │   │   │       │   │   │           ├── camellia.c.obj
+│   │   │   │       │   │   │           ├── ccm.c.obj
+│   │   │   │       │   │   │           ├── chacha20.c.obj
+│   │   │   │       │   │   │           ├── chacha20_neon.c.obj
+│   │   │   │       │   │   │           ├── chachapoly.c.obj
+│   │   │   │       │   │   │           ├── cipher.c.obj
+│   │   │   │       │   │   │           ├── cipher_wrap.c.obj
+│   │   │   │       │   │   │           ├── cmac.c.obj
+│   │   │   │       │   │   │           ├── ctr_drbg.c.obj
+│   │   │   │       │   │   │           ├── ecdsa.c.obj
+│   │   │   │       │   │   │           ├── ecjpake.c.obj
+│   │   │   │       │   │   │           ├── ecp.c.obj
+│   │   │   │       │   │   │           ├── ecp_curves.c.obj
+│   │   │   │       │   │   │           ├── ecp_curves_new.c.obj
+│   │   │   │       │   │   │           ├── entropy.c.obj
+│   │   │   │       │   │   │           ├── entropy_poll.c.obj
+│   │   │   │       │   │   │           ├── gcm.c.obj
+│   │   │   │       │   │   │           ├── hmac_drbg.c.obj
+│   │   │   │       │   │   │           ├── md5.c.obj
+│   │   │   │       │   │   │           ├── poly1305.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_aead.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_cipher.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_ecp.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_ffdh.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_hash.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_mac.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_pake.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_rsa.c.obj
+│   │   │   │       │   │   │           ├── psa_crypto_xof.c.obj
+│   │   │   │       │   │   │           ├── psa_util_internal.c.obj
+│   │   │   │       │   │   │           ├── ripemd160.c.obj
+│   │   │   │       │   │   │           ├── rsa_alt_helpers.c.obj
+│   │   │   │       │   │   │           ├── rsa.c.obj
+│   │   │   │       │   │   │           ├── sha1.c.obj
+│   │   │   │       │   │   │           ├── sha256.c.obj
+│   │   │   │       │   │   │           ├── sha3.c.obj
+│   │   │   │       │   │   │           └── sha512.c.obj
+│   │   │   │       │   │   ├── cmake_install.cmake
+│   │   │   │       │   │   └── libmbed-builtin.a
+│   │   │   │       │   ├── CMakeFiles
+│   │   │   │       │   ├── cmake_install.cmake
+│   │   │   │       │   ├── everest
+│   │   │   │       │   │   ├── CMakeFiles
+│   │   │   │       │   │   │   └── everest.dir
+│   │   │   │       │   │   │       └── library
+│   │   │   │       │   │   │           ├── Hacl_Curve25519_joined.c.obj
+│   │   │   │       │   │   │           └── x25519.c.obj
+│   │   │   │       │   │   ├── cmake_install.cmake
+│   │   │   │       │   │   └── libeverest.a
+│   │   │   │       │   ├── p256-m
+│   │   │   │       │   │   ├── CMakeFiles
+│   │   │   │       │   │   │   └── p256-m.dir
+│   │   │   │       │   │   │       ├── p256-m
+│   │   │   │       │   │   │       │   └── p256-m.c.obj
+│   │   │   │       │   │   │       └── p256-m_driver_entrypoints.c.obj
+│   │   │   │       │   │   ├── cmake_install.cmake
+│   │   │   │       │   │   └── libp256-m.a
+│   │   │   │       │   └── pqcp
+│   │   │   │       │       ├── CMakeFiles
+│   │   │   │       │       │   └── pqcp.dir
+│   │   │   │       │       │       └── src
+│   │   │   │       │       │           ├── psa_crypto_mldsa.c.obj
+│   │   │   │       │       │           └── wrap_mldsa_native.c.obj
+│   │   │   │       │       ├── cmake_install.cmake
+│   │   │   │       │       └── libpqcp.a
+│   │   │   │       ├── extras
+│   │   │   │       │   ├── CMakeFiles
+│   │   │   │       │   │   └── extras.dir
+│   │   │   │       │   │       ├── lmots.c.obj
+│   │   │   │       │   │       ├── lms.c.obj
+│   │   │   │       │   │       ├── md.c.obj
+│   │   │   │       │   │       ├── nist_kw.c.obj
+│   │   │   │       │   │       ├── pk.c.obj
+│   │   │   │       │   │       ├── pk_ecc.c.obj
+│   │   │   │       │   │       ├── pkparse.c.obj
+│   │   │   │       │   │       ├── pk_rsa.c.obj
+│   │   │   │       │   │       ├── pk_wrap.c.obj
+│   │   │   │       │   │       └── pkwrite.c.obj
+│   │   │   │       │   ├── cmake_install.cmake
+│   │   │   │       │   └── libextras.a
+│   │   │   │       ├── include
+│   │   │   │       │   ├── CMakeFiles
+│   │   │   │       │   └── cmake_install.cmake
+│   │   │   │       ├── pkgconfig
+│   │   │   │       │   ├── CMakeFiles
+│   │   │   │       │   └── cmake_install.cmake
+│   │   │   │       ├── platform
+│   │   │   │       │   ├── CMakeFiles
+│   │   │   │       │   │   └── platform.dir
+│   │   │   │       │   │       ├── memory_buffer_alloc.c.obj
+│   │   │   │       │   │       ├── platform.c.obj
+│   │   │   │       │   │       ├── platform_util.c.obj
+│   │   │   │       │   │       └── threading.c.obj
+│   │   │   │       │   ├── cmake_install.cmake
+│   │   │   │       │   └── libplatform.a
+│   │   │   │       └── utilities
+│   │   │   │           ├── CMakeFiles
+│   │   │   │           │   └── utilities.dir
+│   │   │   │           │       ├── asn1parse.c.obj
+│   │   │   │           │       ├── asn1write.c.obj
+│   │   │   │           │       ├── base64.c.obj
+│   │   │   │           │       ├── constant_time.c.obj
+│   │   │   │           │       ├── oid.c.obj
+│   │   │   │           │       ├── pem.c.obj
+│   │   │   │           │       └── pkcs5.c.obj
+│   │   │   │           ├── cmake_install.cmake
+│   │   │   │           └── libutilities.a
+│   │   │   └── x509_crt_bundle
+│   │   ├── ml_engine
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_ml_engine.dir
+│   │   │   │       └── src
+│   │   │   │           └── window_accumulator.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libml_engine.a
+│   │   ├── nvs_flash
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_nvs_flash.dir
+│   │   │   │       └── src
+│   │   │   │           ├── nvs_api.cpp.obj
+│   │   │   │           ├── nvs_bootloader_aes.c.obj
+│   │   │   │           ├── nvs_bootloader.c.obj
+│   │   │   │           ├── nvs_bootloader_xts_aes.c.obj
+│   │   │   │           ├── nvs_cxx_api.cpp.obj
+│   │   │   │           ├── nvs_encrypted_partition.cpp.obj
+│   │   │   │           ├── nvs_handle_locked.cpp.obj
+│   │   │   │           ├── nvs_handle_simple.cpp.obj
+│   │   │   │           ├── nvs_item_hash_list.cpp.obj
+│   │   │   │           ├── nvs_page.cpp.obj
+│   │   │   │           ├── nvs_pagemanager.cpp.obj
+│   │   │   │           ├── nvs_partition.cpp.obj
+│   │   │   │           ├── nvs_partition_lookup.cpp.obj
+│   │   │   │           ├── nvs_partition_manager.cpp.obj
+│   │   │   │           ├── nvs_platform.cpp.obj
+│   │   │   │           ├── nvs_storage.cpp.obj
+│   │   │   │           └── nvs_types.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libnvs_flash.a
+│   │   ├── nvs_sec_provider
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_nvs_sec_provider.dir
+│   │   │   │       └── nvs_sec_provider.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libnvs_sec_provider.a
+│   │   ├── openthread
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── partition_table
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── partition-table-flash_args.in
+│   │   ├── perfmon
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_perfmon.dir
+│   │   │   │       ├── xtensa_perfmon_access.c.obj
+│   │   │   │       ├── xtensa_perfmon_apis.c.obj
+│   │   │   │       └── xtensa_perfmon_masks.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libperfmon.a
+│   │   ├── protobuf-c
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_protobuf-c.dir
+│   │   │   │       └── protobuf-c
+│   │   │   │           └── protobuf-c
+│   │   │   │               └── protobuf-c.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libprotobuf-c.a
+│   │   ├── protocomm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_protocomm.dir
+│   │   │   │       ├── proto-c
+│   │   │   │       │   ├── constants.pb-c.c.obj
+│   │   │   │       │   ├── sec0.pb-c.c.obj
+│   │   │   │       │   ├── sec1.pb-c.c.obj
+│   │   │   │       │   ├── sec2.pb-c.c.obj
+│   │   │   │       │   └── session.pb-c.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── common
+│   │   │   │           │   └── protocomm.c.obj
+│   │   │   │           ├── crypto
+│   │   │   │           │   └── srp6a
+│   │   │   │           │       ├── esp_srp.c.obj
+│   │   │   │           │       └── esp_srp_mpi.c.obj
+│   │   │   │           ├── security
+│   │   │   │           │   └── security2.c.obj
+│   │   │   │           └── transports
+│   │   │   │               ├── protocomm_console.c.obj
+│   │   │   │               └── protocomm_httpd.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libprotocomm.a
+│   │   ├── pthread
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_pthread.dir
+│   │   │   │       ├── pthread.c.obj
+│   │   │   │       ├── pthread_cond_var.c.obj
+│   │   │   │       ├── pthread_local_storage.c.obj
+│   │   │   │       ├── pthread_rwlock.c.obj
+│   │   │   │       └── pthread_semaphore.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libpthread.a
+│   │   ├── rt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_rt.dir
+│   │   │   │       ├── FreeRTOS_POSIX_mqueue.c.obj
+│   │   │   │       └── FreeRTOS_POSIX_utils.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── librt.a
+│   │   ├── sdmmc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_sdmmc.dir
+│   │   │   │       ├── sdmmc_blockdev.c.obj
+│   │   │   │       ├── sdmmc_cmd.c.obj
+│   │   │   │       ├── sdmmc_common.c.obj
+│   │   │   │       ├── sdmmc_init.c.obj
+│   │   │   │       ├── sdmmc_io.c.obj
+│   │   │   │       ├── sdmmc_mmc.c.obj
+│   │   │   │       ├── sdmmc_sd.c.obj
+│   │   │   │       └── sd_pwr_ctrl
+│   │   │   │           └── sd_pwr_ctrl.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libsdmmc.a
+│   │   ├── soc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_soc.dir
+│   │   │   │       ├── dport_access_common.c.obj
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   ├── gpio_periph.c.obj
+│   │   │   │       │   ├── interrupts.c.obj
+│   │   │   │       │   ├── mpi_periph.c.obj
+│   │   │   │       │   └── power_supply_periph.c.obj
+│   │   │   │       └── lldesc.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libsoc.a
+│   │   ├── spiffs
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_spiffs.dir
+│   │   │   │       ├── esp_spiffs.c.obj
+│   │   │   │       ├── spiffs
+│   │   │   │       │   └── src
+│   │   │   │       │       ├── spiffs_cache.c.obj
+│   │   │   │       │       ├── spiffs_check.c.obj
+│   │   │   │       │       ├── spiffs_gc.c.obj
+│   │   │   │       │       ├── spiffs_hydrogen.c.obj
+│   │   │   │       │       └── spiffs_nucleus.c.obj
+│   │   │   │       └── spiffs_api.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libspiffs.a
+│   │   ├── spi_flash
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_spi_flash.dir
+│   │   │   │       ├── cache_utils.c.obj
+│   │   │   │       ├── esp32s3
+│   │   │   │       │   └── spi_flash_oct_flash_init.c.obj
+│   │   │   │       ├── esp_flash_api.c.obj
+│   │   │   │       ├── esp_flash_spi_init.c.obj
+│   │   │   │       ├── flash_brownout_hook.c.obj
+│   │   │   │       ├── flash_mmap.c.obj
+│   │   │   │       ├── flash_ops.c.obj
+│   │   │   │       ├── memspi_host_driver.c.obj
+│   │   │   │       ├── spi_flash_blockdev.c.obj
+│   │   │   │       ├── spi_flash_chip_boya.c.obj
+│   │   │   │       ├── spi_flash_chip_drivers.c.obj
+│   │   │   │       ├── spi_flash_chip_gd.c.obj
+│   │   │   │       ├── spi_flash_chip_generic.c.obj
+│   │   │   │       ├── spi_flash_chip_issi.c.obj
+│   │   │   │       ├── spi_flash_chip_mxic.c.obj
+│   │   │   │       ├── spi_flash_chip_mxic_opi.c.obj
+│   │   │   │       ├── spi_flash_chip_th.c.obj
+│   │   │   │       ├── spi_flash_chip_winbond.c.obj
+│   │   │   │       ├── spi_flash_hpm_enable.c.obj
+│   │   │   │       ├── spi_flash_os_func_app.c.obj
+│   │   │   │       ├── spi_flash_os_func_noos.c.obj
+│   │   │   │       └── spi_flash_wrap.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libspi_flash.a
+│   │   ├── tcp_transport
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_tcp_transport.dir
+│   │   │   │       ├── transport.c.obj
+│   │   │   │       ├── transport_internal.c.obj
+│   │   │   │       ├── transport_socks_proxy.c.obj
+│   │   │   │       ├── transport_ssl.c.obj
+│   │   │   │       └── transport_ws.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libtcp_transport.a
+│   │   ├── telemetry
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_telemetry.dir
+│   │   │   │       └── src
+│   │   │   │           ├── eeg_streamer.cpp.obj
+│   │   │   │           ├── udp_transport.cpp.obj
+│   │   │   │           └── usb_jtag_transport.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libtelemetry.a
+│   │   ├── ulp
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── unity
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_unity.dir
+│   │   │   │       ├── port
+│   │   │   │       │   └── esp
+│   │   │   │       │       └── unity_utils_memory_esp.c.obj
+│   │   │   │       ├── unity
+│   │   │   │       │   └── src
+│   │   │   │       │       └── unity.c.obj
+│   │   │   │       ├── unity_compat.c.obj
+│   │   │   │       ├── unity_port_esp32.c.obj
+│   │   │   │       ├── unity_runner.c.obj
+│   │   │   │       ├── unity_utils_cache.c.obj
+│   │   │   │       ├── unity_utils_freertos.c.obj
+│   │   │   │       └── unity_utils_memory.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libunity.a
+│   │   ├── vfs
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_vfs.dir
+│   │   │   │       ├── nullfs.c.obj
+│   │   │   │       ├── vfs_calls.c.obj
+│   │   │   │       ├── vfs.c.obj
+│   │   │   │       ├── vfs_eventfd.c.obj
+│   │   │   │       └── vfs_semihost.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libvfs.a
+│   │   ├── wear_levelling
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_wear_levelling.dir
+│   │   │   │       ├── BDL_Access.cpp.obj
+│   │   │   │       ├── crc32.cpp.obj
+│   │   │   │       ├── Partition.cpp.obj
+│   │   │   │       ├── SPI_Flash.cpp.obj
+│   │   │   │       ├── wear_levelling.cpp.obj
+│   │   │   │       ├── wl_blockdev.cpp.obj
+│   │   │   │       ├── WL_Ext_Perf.cpp.obj
+│   │   │   │       ├── WL_Ext_Safe.cpp.obj
+│   │   │   │       └── WL_Flash.cpp.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libwear_levelling.a
+│   │   ├── wpa_supplicant
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_wpa_supplicant.dir
+│   │   │   │       ├── esp_supplicant
+│   │   │   │       │   └── src
+│   │   │   │       │       ├── crypto
+│   │   │   │       │       │   ├── crypto_mbedtls-bignum.c.obj
+│   │   │   │       │       │   ├── crypto_mbedtls.c.obj
+│   │   │   │       │       │   ├── crypto_mbedtls-ec.c.obj
+│   │   │   │       │       │   ├── crypto_mbedtls-rsa.c.obj
+│   │   │   │       │       │   ├── fastpsk.c.obj
+│   │   │   │       │       │   └── tls_mbedtls.c.obj
+│   │   │   │       │       ├── esp_common.c.obj
+│   │   │   │       │       ├── esp_eap_client.c.obj
+│   │   │   │       │       ├── esp_hostap.c.obj
+│   │   │   │       │       ├── esp_owe.c.obj
+│   │   │   │       │       ├── esp_wpa2_api_port.c.obj
+│   │   │   │       │       ├── esp_wpa3.c.obj
+│   │   │   │       │       ├── esp_wpa_main.c.obj
+│   │   │   │       │       ├── esp_wpas_glue.c.obj
+│   │   │   │       │       └── esp_wps.c.obj
+│   │   │   │       ├── port
+│   │   │   │       │   ├── eloop.c.obj
+│   │   │   │       │   └── os_xtensa.c.obj
+│   │   │   │       └── src
+│   │   │   │           ├── ap
+│   │   │   │           │   ├── ap_config.c.obj
+│   │   │   │           │   ├── comeback_token.c.obj
+│   │   │   │           │   ├── ieee802_11.c.obj
+│   │   │   │           │   ├── ieee802_1x.c.obj
+│   │   │   │           │   ├── pmksa_cache_auth.c.obj
+│   │   │   │           │   ├── sta_info.c.obj
+│   │   │   │           │   ├── wpa_auth.c.obj
+│   │   │   │           │   └── wpa_auth_ie.c.obj
+│   │   │   │           ├── common
+│   │   │   │           │   ├── dragonfly.c.obj
+│   │   │   │           │   ├── ieee802_11_common.c.obj
+│   │   │   │           │   ├── sae.c.obj
+│   │   │   │           │   ├── sae_pk.c.obj
+│   │   │   │           │   └── wpa_common.c.obj
+│   │   │   │           ├── crypto
+│   │   │   │           │   ├── aes-ccm.c.obj
+│   │   │   │           │   ├── aes-gcm.c.obj
+│   │   │   │           │   ├── aes-siv.c.obj
+│   │   │   │           │   ├── aes-unwrap.c.obj
+│   │   │   │           │   ├── aes-wrap.c.obj
+│   │   │   │           │   ├── ccmp.c.obj
+│   │   │   │           │   ├── crypto_ops.c.obj
+│   │   │   │           │   ├── des-internal.c.obj
+│   │   │   │           │   ├── dh_group5.c.obj
+│   │   │   │           │   ├── dh_groups.c.obj
+│   │   │   │           │   ├── md4-internal.c.obj
+│   │   │   │           │   ├── ms_funcs.c.obj
+│   │   │   │           │   ├── rc4.c.obj
+│   │   │   │           │   ├── sha1-prf.c.obj
+│   │   │   │           │   ├── sha1-tlsprf.c.obj
+│   │   │   │           │   ├── sha1-tprf.c.obj
+│   │   │   │           │   ├── sha256-kdf.c.obj
+│   │   │   │           │   ├── sha256-prf.c.obj
+│   │   │   │           │   ├── sha256-tlsprf.c.obj
+│   │   │   │           │   ├── sha384-prf.c.obj
+│   │   │   │           │   └── sha384-tlsprf.c.obj
+│   │   │   │           ├── eap_common
+│   │   │   │           │   └── eap_wsc_common.c.obj
+│   │   │   │           ├── eap_peer
+│   │   │   │           │   ├── chap.c.obj
+│   │   │   │           │   ├── eap.c.obj
+│   │   │   │           │   ├── eap_common.c.obj
+│   │   │   │           │   ├── eap_fast.c.obj
+│   │   │   │           │   ├── eap_fast_common.c.obj
+│   │   │   │           │   ├── eap_fast_pac.c.obj
+│   │   │   │           │   ├── eap_mschapv2.c.obj
+│   │   │   │           │   ├── eap_peap.c.obj
+│   │   │   │           │   ├── eap_peap_common.c.obj
+│   │   │   │           │   ├── eap_tls.c.obj
+│   │   │   │           │   ├── eap_tls_common.c.obj
+│   │   │   │           │   ├── eap_ttls.c.obj
+│   │   │   │           │   └── mschapv2.c.obj
+│   │   │   │           ├── rsn_supp
+│   │   │   │           │   ├── pmksa_cache.c.obj
+│   │   │   │           │   ├── wpa.c.obj
+│   │   │   │           │   └── wpa_ie.c.obj
+│   │   │   │           ├── utils
+│   │   │   │           │   ├── base64.c.obj
+│   │   │   │           │   ├── bitfield.c.obj
+│   │   │   │           │   ├── common.c.obj
+│   │   │   │           │   ├── ext_password.c.obj
+│   │   │   │           │   ├── json.c.obj
+│   │   │   │           │   ├── uuid.c.obj
+│   │   │   │           │   ├── wpabuf.c.obj
+│   │   │   │           │   └── wpa_debug.c.obj
+│   │   │   │           └── wps
+│   │   │   │               ├── wps_attr_build.c.obj
+│   │   │   │               ├── wps_attr_parse.c.obj
+│   │   │   │               ├── wps_attr_process.c.obj
+│   │   │   │               ├── wps.c.obj
+│   │   │   │               ├── wps_common.c.obj
+│   │   │   │               ├── wps_dev_attr.c.obj
+│   │   │   │               └── wps_enrollee.c.obj
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── libwpa_supplicant.a
+│   │   └── xtensa
+│   │       ├── CMakeFiles
+│   │       │   └── __idf_xtensa.dir
+│   │       │       ├── eri.c.obj
+│   │       │       ├── xtensa_context.S.obj
+│   │       │       ├── xtensa_intr_asm.S.obj
+│   │       │       ├── xtensa_intr.c.obj
+│   │       │       ├── xtensa_vectors.S.obj
+│   │       │       └── xt_trax.c.obj
+│   │       ├── cmake_install.cmake
+│   │       └── libxtensa.a
+│   ├── flash_app_args
+│   ├── flash_args
+│   ├── flash_args.in
+│   ├── flash_bootloader_args
+│   ├── flasher_args.json
+│   ├── flasher_args.json.in
+│   ├── flash_project_args
+│   ├── gdbinit
+│   │   ├── connect
+│   │   ├── gdbinit
+│   │   ├── prefix_map
+│   │   ├── py_extensions
+│   │   └── symbols
+│   ├── hints.yml
+│   ├── kconfigs.in
+│   ├── kconfigs_projbuild.in
+│   ├── ldgen_libraries
+│   ├── ldgen_libraries.in
+│   ├── log
+│   │   ├── idf_py_stderr_output_155308
+│   │   ├── idf_py_stderr_output_156324
+│   │   ├── idf_py_stderr_output_157155
+│   │   ├── idf_py_stderr_output_162087
+│   │   ├── idf_py_stderr_output_162519
+│   │   ├── idf_py_stderr_output_348883
+│   │   ├── idf_py_stdout_output_155308
+│   │   ├── idf_py_stdout_output_156324
+│   │   ├── idf_py_stdout_output_157155
+│   │   ├── idf_py_stdout_output_162087
+│   │   ├── idf_py_stdout_output_162519
+│   │   └── idf_py_stdout_output_348883
+│   ├── neurodaq-firmware.bin
+│   ├── neurodaq-firmware.elf
+│   ├── neurodaq-firmware.map
+│   ├── partition_table
+│   │   └── partition-table.bin
+│   ├── partition-table-flash_args
+│   ├── project_description.json
+│   ├── project_elf_src_esp32s3.c
+│   ├── specs
+│   │   └── picolibc.specs
+│   ├── toolchain
+│   │   ├── asmflags
+│   │   ├── cflags
+│   │   ├── cxxflags
+│   │   ├── ldflags
+│   │   └── toolchain-esp32s3.cmake
+│   └── x509_crt_bundle.S
+├── cmake-build-debug-espidf
+│   ├── app-flash_args
+│   ├── app-flash_args.in
+│   ├── bootloader
+│   ├── bootloader-flash_args
+│   ├── bootloader-prefix
+│   │   ├── src
+│   │   │   └── bootloader-stamp
+│   │   │       ├── bootloader-patch-info.txt
+│   │   │       ├── bootloader-source_dirinfo.txt
+│   │   │       └── bootloader-update-info.txt
+│   │   └── tmp
+│   │       ├── bootloader-cfgcmd.txt
+│   │       └── bootloader-mkdirs.cmake
+│   ├── build.ninja
+│   ├── CMakeCache.txt
+│   ├── CMakeFiles
+│   │   ├── 4.2.2
+│   │   │   ├── CMakeASMCompiler.cmake
+│   │   │   ├── CMakeCCompiler.cmake
+│   │   │   ├── CMakeCXXCompiler.cmake
+│   │   │   ├── CMakeDetermineCompilerABI_C.bin
+│   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│   │   │   ├── CMakeSystem.cmake
+│   │   │   ├── CompilerIdASM
+│   │   │   ├── CompilerIdC
+│   │   │   │   ├── a.out
+│   │   │   │   ├── CMakeCCompilerId.c
+│   │   │   │   └── tmp
+│   │   │   └── CompilerIdCXX
+│   │   │       ├── a.out
+│   │   │       ├── CMakeCXXCompilerId.cpp
+│   │   │       └── tmp
+│   │   ├── bootloader.dir
+│   │   │   ├── Labels.json
+│   │   │   └── Labels.txt
+│   │   ├── clean_additional.cmake
+│   │   ├── clion-Debug-ESPIDF-log.txt
+│   │   ├── clion-environment.txt
+│   │   ├── cmake.check_cache
+│   │   ├── CMakeConfigureLog.yaml
+│   │   ├── CMakeScratch
+│   │   ├── git-data
+│   │   │   ├── grabRef.cmake
+│   │   │   ├── HEAD
+│   │   │   └── head-ref
+│   │   ├── InstallScripts.json
+│   │   ├── neurodaq-firmware.elf.dir
+│   │   ├── pkgRedirects
+│   │   ├── rules.ninja
+│   │   └── TargetDirectories.txt
+│   ├── cmake_install.cmake
+│   ├── compile_commands.json
+│   ├── config
+│   │   ├── kconfig_menus.json
+│   │   ├── sdkconfig.cmake
+│   │   ├── sdkconfig.h
+│   │   └── sdkconfig.json
+│   ├── config.env
+│   ├── esp-idf
+│   │   ├── app_trace
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── app_update
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_app_update.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── bootloader
+│   │   │   ├── bootloader-flash_args.in
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── bootloader_support
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_bootloader_support.dir
+│   │   │   │       ├── bootloader_flash
+│   │   │   │       │   └── src
+│   │   │   │       └── src
+│   │   │   │           └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── bt
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── carlos-lorenzo__ads1299
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_carlos-lorenzo__ads1299.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── CMakeFiles
+│   │   ├── cmake_install.cmake
+│   │   ├── cmock
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_cmock.dir
+│   │   │   │       └── CMock
+│   │   │   │           └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── console
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_console.dir
+│   │   │   │       ├── argtable3
+│   │   │   │       └── linenoise
+│   │   │   └── cmake_install.cmake
+│   │   ├── cxx
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_cxx.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── driver
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_driver.dir
+│   │   │   │       ├── i2c
+│   │   │   │       ├── touch_sensor
+│   │   │   │       │   └── esp32s3
+│   │   │   │       └── twai
+│   │   │   └── cmake_install.cmake
+│   │   ├── efuse
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_efuse.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       └── src
+│   │   │   │           └── efuse_controller
+│   │   │   │               └── keys
+│   │   │   │                   └── with_key_purposes
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_adc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_adc.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       └── gdma
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_app_format
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_app_format.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_blockdev
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_blockdev_util
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_blockdev_util.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_bootloader_format
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_bootloader_format.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_coex
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_coex.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_common
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_common.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── espcoredump
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_ana_cmpr
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_bitscrambler
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_cam
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_cam.dir
+│   │   │   │       └── dvp
+│   │   │   │           └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_dac
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_dma
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_dma.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_gpio
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_gpio.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_gptimer
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_gptimer.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_i2c
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_i2c.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_i2s
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_i2s.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_i3c
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_isp
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_jpeg
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_ledc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_ledc.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_mcpwm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_mcpwm.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_parlio
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_pcnt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_pcnt.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_ppa
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_rmt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_rmt.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_sd_intf
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sd_intf.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_sdio
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_sdm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sdm.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_sdmmc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sdmmc.dir
+│   │   │   │       ├── legacy
+│   │   │   │       │   └── src
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_sdspi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_sdspi.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_spi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_spi.dir
+│   │   │   │       └── src
+│   │   │   │           └── gpspi
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_touch_sens
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_touch_sens.dir
+│   │   │   │       ├── common
+│   │   │   │       └── hw_ver2
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_tsens
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_tsens.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_twai
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_twai.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_uart
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_uart.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_driver_usb_serial_jtag
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_driver_usb_serial_jtag.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_eth
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_eth.dir
+│   │   │   │       └── src
+│   │   │   │           └── phy
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_event
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_event.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_gdbstub
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_gdbstub.dir
+│   │   │   │       └── src
+│   │   │   │           └── port
+│   │   │   │               └── xtensa
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_ana_cmpr
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_ana_conv
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_ana_conv.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_cam
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_cam.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_clock
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_clock.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_dma
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_dma.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_gpio
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_gpio.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_gpspi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_gpspi.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_i2c
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_i2c.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_i2s
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_i2s.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_ieee802154
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_jpeg
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_lcd
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_lcd.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_ledc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_ledc.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_mcpwm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_mcpwm.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_mspi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_mspi.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_parlio
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_pcnt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_pcnt.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_pmu
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_pmu.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_ppa
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_rmt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_rmt.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_rtc_timer
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_sd
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_sd.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_security
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_security.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_timg
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_timg.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_touch_sens
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_touch_sens.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_twai
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_twai.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_uart
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_uart.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_usb
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_usb.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hal_wdt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hal_wdt.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hid
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hid.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_http_client
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_http_client.dir
+│   │   │   │       └── lib
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_http_server
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_http_server.dir
+│   │   │   │       └── src
+│   │   │   │           └── util
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_https_ota
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_https_ota.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_https_server
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_https_server.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_hw_support
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_hw_support.dir
+│   │   │   │       ├── lowpower
+│   │   │   │       │   └── port
+│   │   │   │       │       └── esp32s3
+│   │   │   │       ├── mspi_timing_tuning
+│   │   │   │       │   └── port
+│   │   │   │       │       └── esp32s3
+│   │   │   │       ├── port
+│   │   │   │       │   └── esp32s3
+│   │   │   │       ├── power_supply
+│   │   │   │       └── usb_phy
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── lowpower
+│   │   │   │   ├── CMakeFiles
+│   │   │   │   └── cmake_install.cmake
+│   │   │   ├── mspi_timing_tuning
+│   │   │   │   └── port
+│   │   │   │       └── esp32s3
+│   │   │   │           ├── CMakeFiles
+│   │   │   │           └── cmake_install.cmake
+│   │   │   └── port
+│   │   │       └── esp32s3
+│   │   │           ├── CMakeFiles
+│   │   │           └── cmake_install.cmake
+│   │   ├── esp_lcd
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_lcd.dir
+│   │   │   │       ├── i2c
+│   │   │   │       ├── i80
+│   │   │   │       ├── rgb
+│   │   │   │       ├── spi
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_libc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_libc.dir
+│   │   │   │       └── src
+│   │   │   │           ├── picolibc
+│   │   │   │           └── port
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── src
+│   │   │       └── port
+│   │   │           ├── CMakeFiles
+│   │   │           └── cmake_install.cmake
+│   │   ├── esp_local_ctrl
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_local_ctrl.dir
+│   │   │   │       ├── proto-c
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_mm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_mm.dir
+│   │   │   │       └── port
+│   │   │   │           └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_netif
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_netif.dir
+│   │   │   │       └── lwip
+│   │   │   │           └── netif
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_netif_stack
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_partition
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_partition.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_phy
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_phy.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_pm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_pm.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_psram
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_psram.dir
+│   │   │   │       └── system_layer
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_ringbuf
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_ringbuf.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_rom
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_rom.dir
+│   │   │   │       └── patches
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_security
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_security.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_stdio
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_stdio.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_system
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_system.dir
+│   │   │   │       ├── port
+│   │   │   │       │   ├── arch
+│   │   │   │       │   │   └── xtensa
+│   │   │   │       │   └── soc
+│   │   │   │       │       └── esp32s3
+│   │   │   │       └── task_wdt
+│   │   │   ├── cmake_install.cmake
+│   │   │   ├── ld
+│   │   │   └── port
+│   │   │       ├── CMakeFiles
+│   │   │       ├── cmake_install.cmake
+│   │   │       └── soc
+│   │   │           └── esp32s3
+│   │   │               ├── CMakeFiles
+│   │   │               └── cmake_install.cmake
+│   │   ├── esp_timer
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_timer.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp-tls
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp-tls.dir
+│   │   │   │       └── esp-tls-crypto
+│   │   │   └── cmake_install.cmake
+│   │   ├── esptool_py
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_trace
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_usb_cdc_rom_console
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── esp_wifi
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_esp_wifi.dir
+│   │   │   │       ├── esp32s3
+│   │   │   │       ├── regulatory
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── fatfs
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_fatfs.dir
+│   │   │   │       ├── diskio
+│   │   │   │       ├── port
+│   │   │   │       │   └── freertos
+│   │   │   │       ├── src
+│   │   │   │       └── vfs
+│   │   │   └── cmake_install.cmake
+│   │   ├── freertos
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_freertos.dir
+│   │   │   │       ├── esp_additions
+│   │   │   │       └── FreeRTOS-Kernel
+│   │   │   │           └── portable
+│   │   │   │               └── xtensa
+│   │   │   └── cmake_install.cmake
+│   │   ├── hal
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_hal.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── heap
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_heap.dir
+│   │   │   │       ├── port
+│   │   │   │       │   └── esp32s3
+│   │   │   │       └── tlsf
+│   │   │   └── cmake_install.cmake
+│   │   ├── http_parser
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_http_parser.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── idf_test
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── ieee802154
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── log
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_log.dir
+│   │   │   │       └── src
+│   │   │   │           ├── buffer
+│   │   │   │           ├── log_level
+│   │   │   │           │   └── tag_log_level
+│   │   │   │           │       ├── cache
+│   │   │   │           │       └── linked_list
+│   │   │   │           └── os
+│   │   │   └── cmake_install.cmake
+│   │   ├── lwip
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_lwip.dir
+│   │   │   │       ├── apps
+│   │   │   │       │   ├── dhcpserver
+│   │   │   │       │   ├── ping
+│   │   │   │       │   └── sntp
+│   │   │   │       ├── lwip
+│   │   │   │       │   └── src
+│   │   │   │       │       ├── api
+│   │   │   │       │       ├── apps
+│   │   │   │       │       │   ├── netbiosns
+│   │   │   │       │       │   └── sntp
+│   │   │   │       │       ├── core
+│   │   │   │       │       │   ├── ipv4
+│   │   │   │       │       │   └── ipv6
+│   │   │   │       │       └── netif
+│   │   │   │       │           └── ppp
+│   │   │   │       │               └── polarssl
+│   │   │   │       └── port
+│   │   │   │           ├── debug
+│   │   │   │           ├── esp32xx
+│   │   │   │           ├── freertos
+│   │   │   │           └── hooks
+│   │   │   └── cmake_install.cmake
+│   │   ├── main
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_main.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── mbedtls
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_mbedtls.dir
+│   │   │   │       ├── __
+│   │   │   │       │   └── __
+│   │   │   │       ├── esp_crt_bundle
+│   │   │   │       └── port
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── mbedtls
+│   │   │       ├── CMakeFiles
+│   │   │       ├── cmake_install.cmake
+│   │   │       ├── include
+│   │   │       │   ├── CMakeFiles
+│   │   │       │   └── cmake_install.cmake
+│   │   │       ├── library
+│   │   │       │   ├── CMakeFiles
+│   │   │       │   │   ├── mbedtls.dir
+│   │   │       │   │   │   └── opt
+│   │   │       │   │   │       └── esp-idf
+│   │   │       │   │   │           └── components
+│   │   │       │   │   │               └── mbedtls
+│   │   │       │   │   │                   └── port
+│   │   │       │   │   └── mbedx509.dir
+│   │   │       │   └── cmake_install.cmake
+│   │   │       ├── pkgconfig
+│   │   │       │   ├── CMakeFiles
+│   │   │       │   └── cmake_install.cmake
+│   │   │       └── tf-psa-crypto
+│   │   │           ├── CMakeFiles
+│   │   │           ├── cmake_install.cmake
+│   │   │           ├── core
+│   │   │           │   ├── CMakeFiles
+│   │   │           │   │   └── tfpsacrypto.dir
+│   │   │           │   │       └── opt
+│   │   │           │   │           └── esp-idf
+│   │   │           │   │               └── components
+│   │   │           │   │                   └── mbedtls
+│   │   │           │   │                       └── port
+│   │   │           │   │                           ├── aes
+│   │   │           │   │                           │   └── dma
+│   │   │           │   │                           ├── bignum
+│   │   │           │   │                           ├── crypto_shared_gdma
+│   │   │           │   │                           ├── psa_crypto_storage
+│   │   │           │   │                           ├── psa_driver
+│   │   │           │   │                           │   ├── esp_aes
+│   │   │           │   │                           │   ├── esp_mac
+│   │   │           │   │                           │   ├── esp_md
+│   │   │           │   │                           │   ├── esp_rsa_ds
+│   │   │           │   │                           │   └── esp_sha
+│   │   │           │   │                           │       └── core
+│   │   │           │   │                           └── sha
+│   │   │           │   │                               └── core
+│   │   │           │   └── cmake_install.cmake
+│   │   │           ├── drivers
+│   │   │           │   ├── builtin
+│   │   │           │   │   ├── CMakeFiles
+│   │   │           │   │   │   └── builtin.dir
+│   │   │           │   │   │       └── src
+│   │   │           │   │   └── cmake_install.cmake
+│   │   │           │   ├── CMakeFiles
+│   │   │           │   ├── cmake_install.cmake
+│   │   │           │   ├── everest
+│   │   │           │   │   ├── CMakeFiles
+│   │   │           │   │   │   └── everest.dir
+│   │   │           │   │   │       └── library
+│   │   │           │   │   └── cmake_install.cmake
+│   │   │           │   ├── p256-m
+│   │   │           │   │   ├── CMakeFiles
+│   │   │           │   │   │   └── p256-m.dir
+│   │   │           │   │   │       └── p256-m
+│   │   │           │   │   └── cmake_install.cmake
+│   │   │           │   └── pqcp
+│   │   │           │       ├── CMakeFiles
+│   │   │           │       │   └── pqcp.dir
+│   │   │           │       │       └── src
+│   │   │           │       └── cmake_install.cmake
+│   │   │           ├── extras
+│   │   │           │   ├── CMakeFiles
+│   │   │           │   │   └── extras.dir
+│   │   │           │   └── cmake_install.cmake
+│   │   │           ├── include
+│   │   │           │   ├── CMakeFiles
+│   │   │           │   └── cmake_install.cmake
+│   │   │           ├── pkgconfig
+│   │   │           │   ├── CMakeFiles
+│   │   │           │   └── cmake_install.cmake
+│   │   │           ├── platform
+│   │   │           │   ├── CMakeFiles
+│   │   │           │   │   └── platform.dir
+│   │   │           │   └── cmake_install.cmake
+│   │   │           └── utilities
+│   │   │               ├── CMakeFiles
+│   │   │               │   └── utilities.dir
+│   │   │               └── cmake_install.cmake
+│   │   ├── nvs_flash
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_nvs_flash.dir
+│   │   │   │       └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── nvs_sec_provider
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_nvs_sec_provider.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── openthread
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── partition_table
+│   │   │   ├── CMakeFiles
+│   │   │   ├── cmake_install.cmake
+│   │   │   └── partition-table-flash_args.in
+│   │   ├── perfmon
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_perfmon.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── protobuf-c
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_protobuf-c.dir
+│   │   │   │       └── protobuf-c
+│   │   │   │           └── protobuf-c
+│   │   │   └── cmake_install.cmake
+│   │   ├── protocomm
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_protocomm.dir
+│   │   │   │       ├── proto-c
+│   │   │   │       └── src
+│   │   │   │           ├── common
+│   │   │   │           ├── crypto
+│   │   │   │           │   └── srp6a
+│   │   │   │           ├── security
+│   │   │   │           └── transports
+│   │   │   └── cmake_install.cmake
+│   │   ├── pthread
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_pthread.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── rt
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_rt.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── sdmmc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_sdmmc.dir
+│   │   │   │       └── sd_pwr_ctrl
+│   │   │   └── cmake_install.cmake
+│   │   ├── soc
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_soc.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── spiffs
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_spiffs.dir
+│   │   │   │       └── spiffs
+│   │   │   │           └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── spi_flash
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_spi_flash.dir
+│   │   │   │       └── esp32s3
+│   │   │   └── cmake_install.cmake
+│   │   ├── tcp_transport
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_tcp_transport.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── ulp
+│   │   │   ├── CMakeFiles
+│   │   │   └── cmake_install.cmake
+│   │   ├── unity
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_unity.dir
+│   │   │   │       ├── port
+│   │   │   │       │   └── esp
+│   │   │   │       └── unity
+│   │   │   │           └── src
+│   │   │   └── cmake_install.cmake
+│   │   ├── vfs
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_vfs.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── wear_levelling
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_wear_levelling.dir
+│   │   │   └── cmake_install.cmake
+│   │   ├── wpa_supplicant
+│   │   │   ├── CMakeFiles
+│   │   │   │   └── __idf_wpa_supplicant.dir
+│   │   │   │       ├── esp_supplicant
+│   │   │   │       │   └── src
+│   │   │   │       │       └── crypto
+│   │   │   │       ├── port
+│   │   │   │       └── src
+│   │   │   │           ├── ap
+│   │   │   │           ├── common
+│   │   │   │           ├── crypto
+│   │   │   │           ├── eap_common
+│   │   │   │           ├── eap_peer
+│   │   │   │           ├── rsn_supp
+│   │   │   │           ├── utils
+│   │   │   │           └── wps
+│   │   │   └── cmake_install.cmake
+│   │   └── xtensa
+│   │       ├── CMakeFiles
+│   │       │   └── __idf_xtensa.dir
+│   │       └── cmake_install.cmake
+│   ├── flash_app_args
+│   ├── flash_args
+│   ├── flash_args.in
+│   ├── flash_bootloader_args
+│   ├── flasher_args.json
+│   ├── flasher_args.json.in
+│   ├── flash_project_args
+│   ├── gdbinit
+│   │   ├── connect
+│   │   ├── gdbinit
+│   │   ├── prefix_map
+│   │   ├── py_extensions
+│   │   └── symbols
+│   ├── hints.yml
+│   ├── kconfigs.in
+│   ├── kconfigs_projbuild.in
+│   ├── ldgen_libraries
+│   ├── ldgen_libraries.in
+│   ├── partition-table-flash_args
+│   ├── project_description.json
+│   ├── specs
+│   │   └── picolibc.specs
+│   ├── Testing
+│   │   └── Temporary
+│   │       └── LastTest.log
+│   └── toolchain
+│       ├── asmflags
+│       ├── cflags
+│       ├── cxxflags
+│       ├── ldflags
+│       └── toolchain-esp32s3.cmake
+├── CMakeLists.txt
+├── components
+│   ├── app
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── app
+│   │   │       └── app_context.hpp
+│   │   └── src
+│   │       └── app_context.cpp
+│   ├── control_plane
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── control_plane
+│   │   │       ├── command_types.hpp
+│   │   │       └── control_server.hpp
+│   │   └── src
+│   │       └── control_server.cpp
+│   ├── dsp
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── dsp
+│   │   │       ├── biquad.hpp
+│   │   │       ├── dsp_task.hpp
+│   │   │       └── iir_filter_chain.hpp
+│   │   └── src
+│   │       ├── biquad.cpp
+│   │       ├── dsp_task.cpp
+│   │       └── iir_filter_chain.cpp
+│   ├── eeg_core
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── eeg_core
+│   │   │       ├── eeg_types.hpp
+│   │   │       ├── frame_pool.hpp
+│   │   │       ├── i_stream_source.hpp
+│   │   │       └── status.hpp
+│   │   └── src
+│   │       ├── frame_pool.cpp
+│   │       └── status.cpp
+│   ├── eeg_manager
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── eeg_manager
+│   │   │       └── eeg_manager.hpp
+│   │   └── src
+│   │       └── eeg_manager.cpp
+│   ├── ml_engine
+│   │   ├── CMakeLists.txt
+│   │   ├── include
+│   │   │   └── ml_engine
+│   │   │       ├── i_model.hpp
+│   │   │       └── window_accumulator.hpp
+│   │   └── src
+│   │       └── window_accumulator.cpp
+│   └── telemetry
+│       ├── CMakeLists.txt
+│       ├── include
+│       │   └── telemetry
+│       │       ├── eeg_streamer.hpp
+│       │       ├── i_transport.hpp
+│       │       ├── udp_transport.hpp
+│       │       ├── usb_jtag_transport.hpp
+│       │       └── wire_protocol.hpp
+│       └── src
+│           ├── eeg_streamer.cpp
+│           ├── udp_transport.cpp
+│           └── usb_jtag_transport.cpp
+├── dependencies.lock
+├── LICENSE
+├── main
+│   ├── CMakeLists.txt
+│   ├── idf_component.yml
+│   ├── Kconfig.projbuild
+│   └── main.cpp
+├── managed_components
+│   └── carlos-lorenzo__ads1299
+│       ├── activate_idf.sh
+│       ├── ads1299.c
+│       ├── CHECKSUMS.json
+│       ├── CMakeLists.txt
+│       ├── examples
+│       │   └── continuous_streaming
+│       │       ├── CMakeLists.txt
+│       │       └── main
+│       │           ├── CMakeLists.txt
+│       │           ├── idf_component.yml
+│       │           └── main.cpp
+│       ├── idf_component.yml
+│       ├── include
+│       │   ├── ads1299_defs.h
+│       │   └── ads1299.h
+│       ├── LICENSE
+│       ├── pyproject.toml
+│       ├── README.md
+│       └── uv.lock
+├── pin_mappings.md
+├── scaffold_eeg_components.sh
+├── sdkconfig
+├── sdkconfig.old
+├── test
+│   ├── CMakeLists.txt
+│   ├── test_biquad.cpp
+│   ├── test_frame_pool.cpp
+│   └── test_window_accumulator.cpp
+└── tree.txt
+
+1602 directories, 1863 files
