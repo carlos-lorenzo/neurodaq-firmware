@@ -11,7 +11,6 @@
 
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
-#include "driver/uart.h"
 #include "driver/usb_serial_jtag.h"
 
 
@@ -40,8 +39,9 @@
 #define FRAME_SYNC_0           0xAA
 #define FRAME_SYNC_1           0x55
 
-static const char *TAG = "ADS1299";
 
+#define CHANNEL_GAIN ADS1299_PGA_GAIN_24
+#define SAMPLE_RATE ADS1299_DR_250SPS
 
 /**
  * @brief Binary telemetry frame header
@@ -52,26 +52,24 @@ typedef struct __attribute__((packed)) {
     uint32_t chunk_seq;     /**< Monotonically increasing sequence number */
 } telemetry_header_t;
 
+
 /* ── Global State ──────────────────────────────────────────────────────── */
-static RingbufHandle_t s_telemetry_ringbuf = NULL;
+static RingbufHandle_t s_telemetry_ringbuf = nullptr;
 static uint32_t s_chunk_sequence = 0;
 
-static const char *TAG_TLM = "TELEMETRY";
 
-/**
- * @brief Dedicated task to drain the ring buffer and transmit via UART
- */
+
 /**
  * @brief Dedicated task to drain the ring buffer and transmit via native USB
  */
-static void telemetry_tx_task(void *arg)
+[[noreturn]] static void telemetry_tx_task(void *arg)
 {
     size_t item_size;
 
-    while (1) {
+    for (;;) {
         void *item = xRingbufferReceive(s_telemetry_ringbuf, &item_size, portMAX_DELAY);
 
-        if (item != NULL) {
+        if (item != nullptr) {
             // Bypass stdout and VFS completely. Write directly to the USB hardware FIFO.
             // This prevents the OS from corrupting binary 0x0A bytes into 0x0D 0x0A.
             usb_serial_jtag_write_bytes((const char *)item, item_size, portMAX_DELAY);
@@ -81,11 +79,11 @@ static void telemetry_tx_task(void *arg)
     }
 }
 
-void telemetry_init(void)
+void telemetry_init()
 {
     // 1. Install the explicit USB Serial/JTAG driver for raw binary output
     usb_serial_jtag_driver_config_t usb_config = {
-        .tx_buffer_size = 4096, // Generous TX buffer for high-speed streaming
+        .tx_buffer_size = 4096 * 4, // Generous TX buffer for high-speed streaming
         .rx_buffer_size = 256   // Minimal RX buffer (we are mostly transmitting)
     };
 
@@ -101,7 +99,7 @@ void telemetry_init(void)
 
     // 3. Create the No-Split ring buffer for IPC between Core 0 and Core 1
     s_telemetry_ringbuf = xRingbufferCreate(RINGBUF_SIZE_BYTES, RINGBUF_TYPE_NOSPLIT);
-    if (s_telemetry_ringbuf == NULL) {
+    if (s_telemetry_ringbuf == nullptr) {
         printf("Failed to create telemetry ring buffer\n");
         abort();
     }
@@ -111,38 +109,12 @@ void telemetry_init(void)
         telemetry_tx_task,
         "tlm_tx_task",
         4096,
-        NULL,
+        nullptr,
         TELEMETRY_TASK_PRIO,
-        NULL,
+        nullptr,
         TELEMETRY_TASK_CORE
     );
 }
-
-
-// void on_chunk(const ads1299_chunk_t *chunk, void *ctx)
-// {
-//     // Defensive check to avoid null pointer dereferencing
-//     if (!chunk || !chunk->samples || chunk->n_samples == 0) {
-//         return;
-//     }
-//
-//     // 1. Correctly log chunk metadata using 64-bit specifiers for timestamps
-//     ESP_LOGI(TAG, "Chunk: %zu samples | Time: %" PRId64 " to %" PRId64 " us | Dropped: %" PRId64,
-//              chunk->n_samples,
-//              chunk->first_timestamp_us,
-//              chunk->last_timestamp_us,
-//              chunk->dropped_count);
-//
-//     // 2. FIXED: Print multiple channels from the FIRST sample (index 0) of this chunk.
-//     // Explicitly use %"PRId32" to match the int32_t channel array precisely.
-//     ESP_LOGI(TAG, "Sample[0] Data -> CH1: %" PRId32 " | CH2: %" PRId32 " | CH3: %" PRId32 " | CH4: %" PRId32 " | CH5: %" PRId32 ,
-//              chunk->samples[0].channels[0],
-//              chunk->samples[0].channels[1],
-//              chunk->samples[0].channels[2],
-//              chunk->samples[0].channels[3],
-//               chunk->samples[0].channels[4]);
-// }
-
 
 void on_chunk(const ads1299_chunk_t *chunk, void *ctx)
 {
@@ -157,14 +129,14 @@ void on_chunk(const ads1299_chunk_t *chunk, void *ctx)
     // This avoids needing a secondary intermediate buffer on the stack.
     xRingbufferSendAcquire(s_telemetry_ringbuf, &frame_ptr, total_frame_size, pdMS_TO_TICKS(5));
 
-    if (frame_ptr == NULL) {
+    if (frame_ptr == nullptr) {
         // Buffer overflow! The TX task isn't draining fast enough.
         //ESP_LOGW(TAG_TLM, "Ringbuffer full! Dropped %d samples", chunk->n_samples);
         return;
     }
 
     // Cast the acquired memory pointer for sequential writing
-    uint8_t *write_ptr = (uint8_t *)frame_ptr;
+    auto *write_ptr = static_cast<uint8_t *>(frame_ptr);
 
     // 1. Write Header
     telemetry_header_t header = {
@@ -180,7 +152,7 @@ void on_chunk(const ads1299_chunk_t *chunk, void *ctx)
 
     // 3. Calculate and Write Checksum
     uint8_t checksum = 0;
-    const uint8_t *payload_ptr = (const uint8_t *)chunk->samples;
+    const auto *payload_ptr = reinterpret_cast<const uint8_t *>(chunk->samples);
     for (size_t i = 0; i < payload_len; i++) {
         checksum ^= payload_ptr[i];
     }
@@ -191,8 +163,9 @@ void on_chunk(const ads1299_chunk_t *chunk, void *ctx)
     xRingbufferSendComplete(s_telemetry_ringbuf, frame_ptr);
 }
 
-extern "C" void app_main(void)
+extern "C" [[noreturn]] void app_main(void)
 {
+    // Configuring and enabling the LDO which regulates analog power
     gpio_config_t analog_power_cfg = {
         .pin_bit_mask = (1ULL << ANPWREN_PIN),
         .mode = GPIO_MODE_OUTPUT,
@@ -203,11 +176,12 @@ extern "C" void app_main(void)
 
     ESP_ERROR_CHECK(gpio_config(&analog_power_cfg));
 
-    ESP_ERROR_CHECK(gpio_set_level(ANPWREN_PIN, 1));  // Enable LDO
+    ESP_ERROR_CHECK(gpio_set_level(ANPWREN_PIN, 1));
 
     // Wait for analog rails to settle
     vTaskDelay(pdMS_TO_TICKS(250));
 
+    // Configure the SPI bus (user's responsibility)
     spi_bus_config_t bus_cfg = {};
     bus_cfg.miso_io_num = MISO_PIN;
     bus_cfg.mosi_io_num = MOSI_PIN;
@@ -217,65 +191,57 @@ extern "C" void app_main(void)
     bus_cfg.max_transfer_sz = ADS1299_FRAME_SIZE * 25;
 
 
-    ESP_ERROR_CHECK(
-        spi_bus_initialize(SPI2_HOST, &bus_cfg, SPI_DMA_CH_AUTO)
-    );
+    ESP_ERROR_CHECK(spi_bus_initialize(SPI2_HOST, &bus_cfg, SPI_DMA_CH_AUTO));
 
+
+    // Configure and initialize the ADS1299
     ads1299_config_t cfg1  = {};
     cfg1.spi_host = SPI2_HOST;
     cfg1.cs_pin = CS1_PIN;
     cfg1.drdy_pin = DRDY_PIN;
     cfg1.start_pin = START_PIN;
     cfg1.reset_pin = RESET_PIN;
-    cfg1.sample_rate = ADS1299_DR_250SPS;
-    ads1299_t dev1 = ads1299_create(&cfg1);
+    cfg1.sample_rate = SAMPLE_RATE;
+
+    auto dev1 = ads1299_create(&cfg1);
 
     ESP_ERROR_CHECK(ads1299_init(&dev1));
 
-    // Run some configs...
-    // ESP_ERROR_CHECK(ads1299_disable_continuous_read(&dev1));
-    // uint8_t device_id = 1;
-    // ESP_ERROR_CHECK(ads1299_read_register(&dev1, ADS1299_REG_ID, &device_id));
-    // ESP_LOGI(TAG, "Device ID: %d", device_id);
-
+    // ADS1299 must be in SDATAC mode to be configured
     ESP_ERROR_CHECK(ads1299_disable_continuous_read(&dev1));
-    ESP_ERROR_CHECK(ads1299_write_register(&dev1, ADS1299_REG_MISC1, ADS1299_MISC1_SRB1_ON));
-    ESP_ERROR_CHECK(ads1299_write_register(&dev1, ADS1299_REG_CONFIG3, ADS1299_CONFIG3_BIAS_ON));
-    ESP_ERROR_CHECK(ads1299_set_all_channels_gain(&dev1, ADS1299_PGA_GAIN_12));
 
-    // 1. Enter RDATAC (Read Data Continuous) mode
+    // Run your desired configs using the safe masked-register helpers.
+    ESP_ERROR_CHECK(ads1299_set_srb1(&dev1, true));
+    ESP_ERROR_CHECK(ads1299_set_bias_enabled(&dev1, true));
+    ESP_ERROR_CHECK(ads1299_set_bias_sense(&dev1, 1, true, true));
+
+    vTaskDelay(pdMS_TO_TICKS(25));
+
+    ESP_ERROR_CHECK(ads1299_set_all_channels_gain(&dev1, CHANNEL_GAIN));
+
+
+    // ADS1299 must be in RDATAC mode be to read
     ESP_ERROR_CHECK(ads1299_enable_continuous_read(&dev1));
 
-    // 2. Configure continuous acquisition parameters
+    // Configure the chunk size (how often a chunk is outputted by the driver) and the core it will run one
     ads1299_continuous_config_t cont_cfg = {};
-    cont_cfg.on_chunk = on_chunk;
+    cont_cfg.on_chunk = on_chunk; // What happens when a chunk is created. In this example, the data is streamed as raw bytes over serial
     cont_cfg.chunk_duration_ms = ADS1299_DEFAULT_CHUNK_MS; // 100 ms chunks
     cont_cfg.ring_buffer_chunks = ADS1299_RING_BUF_SLOTS;  // 8 chunks in ring buffer
     cont_cfg.task_priority = configMAX_PRIORITIES - 2;
     cont_cfg.task_core = 0;
 
+    // Stream raw bits over serial
     telemetry_init();
 
+    // Apply the config. Different from setting RDATAC. RDATAC is a register inside the ADS1299, this configures the required memory to efficiently transfer data
     ESP_ERROR_CHECK(ads1299_start_continuous(&dev1, &cont_cfg));
 
-    // 3. CRITICAL: Start conversions so the ADC begins pulsing DRDY and triggering interrupts!
+    // CRITICAL: Start conversions so the ADC begins pulsing DRDY and triggering interrupts. RDATAC can be enabled but if it's not started, DRDY (data ready) won't pulse.
+    // Similarly, you can call ads1299_stop to stop DRDY from pulsing
     ESP_ERROR_CHECK(ads1299_start(&dev1));
 
-
-
-    // // 2. Configure a dedicated microsecond-resolution hardware timer
-    // esp_timer_create_args_t periodic_timer_args = {}; // Zero-initialize everything first
-    // periodic_timer_args.callback = &emulated_drdy_timer_callback;
-    // periodic_timer_args.name = "emulated_drdy";
-    //
-    // esp_timer_handle_t periodic_timer;
-    // ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args, &periodic_timer));
-    //
-    // // 3. Start the timer at exactly 4000 microseconds (250 Hz)
-    // // This runs completely independently of FreeRTOS task slicing
-    // ESP_ERROR_CHECK(esp_timer_start_periodic(periodic_timer, 4000));
-
-    // Fall into standard execution loop
+    // Make the program run endlessly
     for (;;) {
         vTaskDelay(pdMS_TO_TICKS(1000));
     }

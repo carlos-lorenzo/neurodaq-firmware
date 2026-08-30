@@ -1,6 +1,6 @@
 # ADS1299 ESP-IDF Driver
 
-[![Component Registry](https://components.espressif.com/components/carlos-lorenzo/ads1299-esp/badge.svg)](https://components.espressif.com/components/carlos-lorenzo/ads1299-esp)
+[![Component Registry](https://components.espressif.com/components/carlos-lorenzo/ads1299/badge.svg)](https://components.espressif.com/components/carlos-lorenzo/ads1299)
 [![Documentation Status](https://readthedocs.org/projects/ads1299-esp/badge/?version=latest)](https://ads1299-esp.readthedocs.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -21,15 +21,19 @@ your application only ever sees `ads1299_sample_t`.
 - Chunked delivery via an internal ring buffer, with dropped-sample and
   overflow counters exposed to the application for monitoring signal
   integrity
-- Full register-level API (gain, input mux, bias, SRB1 routing, and raw
-  register read/write) alongside the high-level continuous-acquisition path
+- Safe masked register updates using `mask & value` semantics, so unrelated
+  control bits are preserved during RMW operations
+- RDATAC awareness in the driver state: writes are rejected with
+  `ESP_ERR_INVALID_STATE` while streaming mode is active
+- Full configuration API for gain, mux, SRB1 routing, bias, lead-off, and
+  other ADS1299 control fields, alongside the raw register read/write layer
 - Clean separation between driver internals and application-layer signal
   processing
 
 ## Installation
 
 ```console
-idf.py add-dependency "carlos-lorenzo/ads1299-esp^0.1.0"
+idf.py add-dependency "carlos-lorenzo/ads1299^0.1.0"
 ```
 
 The application is responsible for initializing the SPI bus
@@ -52,11 +56,18 @@ ads1299_config_t config = {
 
 ads1299_t dev = ads1299_create(&config);
 ESP_ERROR_CHECK(ads1299_init(&dev));
+
+/* Safe, bit-preserving configuration using helper APIs. */
+ESP_ERROR_CHECK(ads1299_set_srb1(&dev, true));
+ESP_ERROR_CHECK(ads1299_set_all_channels_gain(&dev, ADS1299_PGA_GAIN_24));
+ESP_ERROR_CHECK(ads1299_set_all_channels_mux(&dev, ADS1299_INPUT_NORMAL));
+ESP_ERROR_CHECK(ads1299_set_all_channels_powerdown(&dev, false));
 ```
 
 `ads1299_init()` runs the full power-up sequence (hardware reset, device ID
 check, baseline short and test-signal verification) and leaves the device
-ready to stream.
+ready to stream. The configuration helpers preserve unrelated bits in a
+register and reject writes while the device is in RDATAC/streaming mode.
 
 ## Continuous acquisition
 
@@ -86,12 +97,18 @@ processing is expensive.
 
 ## Examples
 
-- [`examples/continuous_streaming`](examples/continuous_streaming) — full
-  dual-device continuous acquisition streamed over USB serial/JTAG as
-  length-prefixed binary frames. This example pins its handler and telemetry
-  tasks to separate cores and targets dual-core parts (tested on ESP32-S3);
-  it will need its `task_core` values adjusted to run on a single-core
-  target. The driver itself has no such restriction.
+- [`examples/continuous_streaming`](examples/continuous_streaming) — streams
+  ADS1299 sample chunks over USB Serial/JTAG as length-prefixed binary frames.
+  The example shows the driver's continuous acquisition path and demonstrates
+  the recommended masked-register configuration pattern for channel setup.
+- [`examples/leadoff_detection`](examples/leadoff_detection) — configures
+  lead-off detection and monitors positive/negative electrode disconnect
+  status for each channel over the active acquisition stream.
+- [`examples/snr`](examples/snr) — measures the ADC's shorted-input noise floor
+  and compares it against the on-chip test signal to compute per-channel SNR.
+- [`examples/wifi_streaming`](examples/wifi_streaming) — configures the ADS1299,
+  streams raw ADC data over UDP/Wi-Fi, and demonstrates how to fan out the
+  driver's chunk callback into a network transport.
 
 ## Documentation
 

@@ -28,6 +28,9 @@ extern "C" {
 
 #include "ads1299_defs.h"
 
+
+
+
 /**
  * @brief One fully parsed sample from the ADS1299.
  *
@@ -127,6 +130,7 @@ typedef struct {
  */
 typedef struct ads1299_dma_ctx ads1299_dma_ctx_t;
 
+
 /**
  * @brief ADS1299 device handle.
  *
@@ -138,6 +142,7 @@ typedef struct {
     ads1299_config_t config;                     /**< Static device configuration. */
     spi_device_handle_t spi_handle;              /**< ESP-IDF SPI device handle. */
     SemaphoreHandle_t mutex;                     /**< Driver mutex. */
+    bool rdatac_active;                          /**< True when RDATAC (continuous read) mode is active. */
     bool initialized;                            /**< True after successful initialization. */
     ads1299_dma_ctx_t *dma_ctx;                  /**< Non-NULL while continuous acquisition is active. */
 } ads1299_t;
@@ -190,6 +195,16 @@ esp_err_t ads1299_write_register(ads1299_t *dev, uint8_t reg, uint8_t value);
  * @return ESP_OK on success, or an ESP-IDF error code.
  */
 esp_err_t ads1299_read_register(ads1299_t *dev, uint8_t reg, uint8_t *value);
+
+/**
+ * @brief Safely update a register using mask-and-value semantics (read-modify-write).
+ *
+ * Performs: new = (current & ~mask) | (value & mask). This helper acquires the
+ * driver mutex to make the multi-step SPI sequence atomic against other tasks.
+ * Writes are rejected if the device is in RDATAC (continuous read) mode or the
+ * target register is read-only.
+ */
+esp_err_t ads1299_update_register_masked(ads1299_t *dev, uint8_t reg, uint8_t mask, uint8_t value);
 
 /**
  * @brief Write a contiguous ADS1299 register range.
@@ -392,6 +407,30 @@ esp_err_t ads1299_set_channel_gain(ads1299_t *dev, uint8_t channel, ads1299_pga_
  */
 esp_err_t ads1299_set_all_channels_gain(ads1299_t *dev, ads1299_pga_gain_t gain);
 
+/* Channel and global configuration helpers (shortcuts) */
+esp_err_t ads1299_set_channel_mux(ads1299_t *dev, uint8_t channel, ads1299_input_mux_t mux);
+esp_err_t ads1299_set_all_channels_mux(ads1299_t *dev, ads1299_input_mux_t mux);
+esp_err_t ads1299_set_channel_powerdown(ads1299_t *dev, uint8_t channel, bool powerdown);
+/* Applies CHnSET PDn bit update to all channels in one mutex-protected batch. */
+esp_err_t ads1299_set_all_channels_powerdown(ads1299_t *dev, bool powerdown);
+
+/* SRB1 routing */
+esp_err_t ads1299_set_srb1(ads1299_t *dev, bool on);
+
+/* Bias / lead-off helpers */
+esp_err_t ads1299_set_bias_enabled(ads1299_t *dev, bool enable);
+esp_err_t ads1299_set_config4_loff_comp(ads1299_t *dev, bool enable);
+
+/* Per-channel bias/leadoff sense control */
+esp_err_t ads1299_set_bias_sense(ads1299_t *dev, uint8_t channel, bool positive, bool enable);
+esp_err_t ads1299_set_all_bias_sense(ads1299_t *dev, bool positive, uint8_t channel_mask);
+
+esp_err_t ads1299_set_loff_sense(ads1299_t *dev, uint8_t channel, bool positive, bool enable);
+esp_err_t ads1299_set_all_loff_sense(ads1299_t *dev, bool positive, uint8_t channel_mask);
+
+/* LOFF_FLIP per-channel */
+esp_err_t ads1299_set_loff_flip(ads1299_t *dev, uint8_t channel, bool flip);
+
 /**
  * @brief Convert an ADS1299 sample-rate enum to hertz.
  *
@@ -399,6 +438,18 @@ esp_err_t ads1299_set_all_channels_gain(ads1299_t *dev, ads1299_pga_gain_t gain)
  * @return Sample rate in hertz, or 0 for an invalid value.
  */
 uint32_t ads1299_sample_rate_to_hz(ads1299_sample_rate_t rate);
+
+
+
+/**
+ * @brief Convert an ADS1299 raw count to microvolts
+ *
+ * @param[in] signed_count ADS1299 count from ads1299_sample_t
+ * @param[in] vref_millivolts ADS1299 vref (usually 4.5V => 4500)
+ * @param[in] gain ADS1299 gain (1, 2, 4, 6, 8, 12, 24)
+ * @return The corresponding voltage in microvolts
+ */
+int32_t ads1299_count_to_microvolts(int32_t signed_count, uint32_t vref_millivolts, ads1299_pga_gain_t gain);
 
 #ifdef __cplusplus
 }

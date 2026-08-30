@@ -11,8 +11,16 @@ files:
   - '**/dist/**/*'
   - '**/personal_references/**/*'
   - '**/.venv/**/*'
+  - '**/__pycache__/**/*'
+  - '**/*.pyc'
+  - pyproject.toml
+  - uv.lock
+  - activate_idf.sh
 license: MIT
-repository: https://github.com/carlos-lorenzo/ads1299-esp.git
+repository: git://github.com/carlos-lorenzo/ads1299.git
+repository_info:
+  commit_sha: 66092ed95cf8455ed48fe8e6a1a2df6476cfedd6
+  path: .
 tags:
 - ads1299
 - eeg
@@ -20,5 +28,5 @@ tags:
 - spi
 - adc
 - eeg-acquisition
-url: https://github.com/carlos-lorenzo/ads1299-esp
-version: 0.1.1
+url: https://github.com/carlos-lorenzo/ads1299
+version: 0.2.0

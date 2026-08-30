@@ -90,8 +90,40 @@ extern "C" {
 #define ADS1299_REG_CONFIG2 0x02
 /** ADS1299 CONFIG3 register address. */
 #define ADS1299_REG_CONFIG3 0x03
+/** ADS1299 CONFIG4 register address. */
+#define ADS1299_REG_CONFIG4 0x17
 /** ADS1299 lead-off control register address. */
 #define ADS1299_REG_LOFF 0x04
+
+/* Additional register addresses (status / read-only) */
+/** Lead-off positive status (read-only) */
+#define ADS1299_REG_LOFF_STATP 0x12
+/** Lead-off negative status (read-only) */
+#define ADS1299_REG_LOFF_STATN 0x13
+
+/* Register read-only guard helper */
+#define ADS1299_REG_IS_READONLY(r) \
+    ((r) == ADS1299_REG_ID || (r) == ADS1299_REG_LOFF_STATP || (r) == ADS1299_REG_LOFF_STATN)
+
+/* Field masks for channel settings (CHnSET registers 0x05..0x0C) */
+#define ADS1299_CHSET_PDN_MASK      0x80  /* bit7: PDn */
+#define ADS1299_CHSET_PDN_ON        0x80  /* raw CHnSET value for PDn=1 */
+#define ADS1299_CHSET_PDN_OFF       0x00  /* raw CHnSET value for PDn=0 */
+#define ADS1299_CHSET_GAIN_MASK     0x70  /* bits6:4: GAINx[2:0] */
+#define ADS1299_CHSET_SRB2_MASK     0x08  /* bit3: SRB2 */
+#define ADS1299_CHSET_MUX_MASK      0x07  /* bits2:0: MUXx[2:0] */
+
+/* Convenience macros to shift/align field values -- callers should use these
+ * helpers to ensure values are placed in the correct bit positions. */
+#define ADS1299_CHSET_GAIN_VAL(gain_enum)  ((uint8_t)(gain_enum) & ADS1299_CHSET_GAIN_MASK)
+#define ADS1299_CHSET_MUX_VAL(mux_enum)    ((uint8_t)(mux_enum) & ADS1299_CHSET_MUX_MASK)
+#define ADS1299_CHSET_PDN_VAL(pd_bool)     ((pd_bool) ? ADS1299_CHSET_PDN_ON : ADS1299_CHSET_PDN_OFF)
+#define ADS1299_CHSET_SRB2_VAL(on)         ((on) ? ADS1299_CHSET_SRB2_MASK : 0x00)
+
+/* Backward-compatible aliases */
+#define ADS1299_CHSET_PD_MASK ADS1299_CHSET_PDN_MASK
+#define ADS1299_CHSET_PD_VAL(pd_bool) ADS1299_CHSET_PDN_VAL(pd_bool)
+
 /** ADS1299 channel 1 settings register address. */
 #define ADS1299_REG_CH1SET 0x05
 /** ADS1299 channel 2 settings register address. */
@@ -112,6 +144,12 @@ extern "C" {
 #define ADS1299_REG_BIAS_SENSP 0x0D
 /** ADS1299 negative BIAS sense register address. */
 #define ADS1299_REG_BIAS_SENSN 0x0E
+/** ADS1299 positive LOFF sense register address. */
+#define ADS1299_REG_LOFF_SENSP 0x0F
+/** ADS1299 negative LOFF sense register address. */
+#define ADS1299_REG_LOFF_SENSN 0x10
+/** ADS1299 LOFF_FLIP register address (per-channel LOFF flip) */
+#define ADS1299_REG_LOFF_FLIP 0x11
 /** ADS1299 SRB1 config register address*/
 #define ADS1299_REG_MISC1 0x15
 
@@ -122,6 +160,17 @@ extern "C" {
 
 #define ADS1299_CONFIG3_BIAS_ON 0b11101100
 #define ADS1299_CONFIG3_BIAS_OFF 0b01100000
+/* Mask of bits in CONFIG3 controlled by the BIAS enable/disable helper
+ * (bits that change between the ON and OFF macros). */
+#define ADS1299_CONFIG3_BIAS_MASK  ((uint8_t)(ADS1299_CONFIG3_BIAS_ON ^ ADS1299_CONFIG3_BIAS_OFF))
+
+#define ADS1299_CONFIG4_LOFF_COMP_ON 0b00000010
+#define ADS1299_CONFIG4_LOFF_COMP_OFF 0b00000000
+#define ADS1299_CONFIG4_LOFF_COMP_MASK 0x02
+
+
+
+
 /**
  * @brief ADS1299 output data rates.
  *

@@ -236,8 +236,8 @@ esp_err_t ads1299_init(ads1299_t *dev)
         .mode = 1,
         .clock_speed_hz = 4 * 1000 * 1000,
         .spics_io_num = dev->config.cs_pin,
-        .cs_ena_pretrans = 2,
-        .cs_ena_posttrans = 4,
+        .cs_ena_pretrans = 4,
+        .cs_ena_posttrans = 8,
         .queue_size = 25,
         .post_cb = NULL /* Set dynamically during continuous start */
     };
@@ -254,6 +254,8 @@ esp_err_t ads1299_init(ads1299_t *dev)
 
     /* 5. Issue SDATAC to exit power-on default RDATAC mode before register access */
     ESP_RETURN_ON_ERROR(ads1299_disable_continuous_read(dev), TAG, "SDATAC failed");
+
+    vTaskDelay(pdMS_TO_TICKS(50));
 
     /* 6. Verify Device ID */
     uint8_t dev_id = 0;
@@ -277,10 +279,20 @@ esp_err_t ads1299_init(ads1299_t *dev)
             break;
     }
 
+    // uint8_t dev_id = 0;
+    int attempts;
+    for (attempts = 1; attempts <= 50; attempts++) {
+        ESP_RETURN_ON_ERROR(ads1299_read_register(dev, ADS1299_REG_ID, &dev_id), TAG, "Read ID failed");
+        if ((dev_id & 0x1F) != 0x00) break;
+        // vTaskDelay(pdMS_TO_TICKS(5));
+        esp_rom_delay_us(5000);
+    }
+    ESP_LOGI(TAG, "Hardware Device ID: 0x%02X after %d attempt(s)", dev_id, attempts);
+
     /* 7. Configure Data Rate and Internal Reference Buffer */
     ESP_RETURN_ON_ERROR(ads1299_write_register(dev, ADS1299_REG_CONFIG1, 0x90 | dev->config.sample_rate), TAG, "Write CONFIG1 failed");
     ESP_RETURN_ON_ERROR(ads1299_write_register(dev, ADS1299_REG_CONFIG3, 0xE0), TAG, "Write CONFIG3 failed");
-    vTaskDelay(pdMS_TO_TICKS(150)); /* Allow internal VREF buffer to settle */
+    vTaskDelay(pdMS_TO_TICKS(200)); /* Allow internal VREF buffer to settle */
 
     /* 8. Baseline Short Evaluation (CHnSET = 0x01) */
     ESP_RETURN_ON_ERROR(ads1299_write_register(dev, ADS1299_REG_CONFIG2, 0xC0), TAG, "Write CONFIG2 failed");
@@ -384,6 +396,20 @@ esp_err_t ads1299_deinit(ads1299_t *dev)
 esp_err_t ads1299_write_register(ads1299_t* dev, uint8_t reg, uint8_t value)
 {
     if (!dev) return ESP_ERR_INVALID_ARG;
+    /* During initialization the driver may call this helper before
+     * dev->initialized is set. Ensure the SPI device has been added
+     * (spi_handle) so that the SPI transactions can proceed. */
+    if (!dev->spi_handle) return ESP_ERR_INVALID_STATE;
+
+    if (ADS1299_REG_IS_READONLY(reg)) {
+        ESP_LOGE(TAG, "Attempt to write to read-only register 0x%02X", reg);
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    if (dev->rdatac_active) {
+        ESP_LOGW(TAG, "WREG rejected: device is in RDATAC (streaming) mode");
+        return ESP_ERR_INVALID_STATE;
+    }
 
     ESP_RETURN_ON_ERROR(spi_device_acquire_bus(dev->spi_handle, portMAX_DELAY), TAG, "Acquire bus failed");
 
@@ -455,6 +481,24 @@ esp_err_t ads1299_read_register(ads1299_t* dev, uint8_t reg, uint8_t* value)
 esp_err_t ads1299_write_registers(ads1299_t* dev, uint8_t start_reg, const uint8_t* data, size_t count)
 {
     if (!dev || !data || count == 0) return ESP_ERR_INVALID_ARG;
+    /* During initialization the driver may need to perform multi-write
+     * sequences before dev->initialized is set. Require the SPI device
+     * to be present instead of the initialized flag. */
+    if (!dev->spi_handle) return ESP_ERR_INVALID_STATE;
+
+    /* Reject if any target register is read-only */
+    for (size_t i = 0; i < count; i++) {
+        uint8_t r = start_reg + (uint8_t)i;
+        if (ADS1299_REG_IS_READONLY(r)) {
+            ESP_LOGE(TAG, "Attempt to write read-only register 0x%02X in multi-write", r);
+            return ESP_ERR_INVALID_ARG;
+        }
+    }
+
+    if (dev->rdatac_active) {
+        ESP_LOGW(TAG, "WREG rejected: device is in RDATAC (streaming) mode");
+        return ESP_ERR_INVALID_STATE;
+    }
 
     size_t total_len = 2 + count;
     uint8_t* tx_buf = (uint8_t*)calloc(1, total_len);
@@ -510,6 +554,59 @@ esp_err_t ads1299_read_registers(ads1299_t* dev, uint8_t start_reg, uint8_t* dat
     free(rx_buf);
     esp_rom_delay_us(ADS1299_T_SDECODE);
     return err;
+}
+
+/**
+ * @brief Safely update a register using mask/value semantics.
+ *
+ * Performs: new = (current & ~mask) | (value & mask).
+ * Acquires dev->mutex to make the multi-step SPI sequence atomic against
+ * concurrent tasks. Rejects writes to read-only registers and when RDATAC is
+ * active.
+ */
+esp_err_t ads1299_update_register_masked(ads1299_t *dev, uint8_t reg, uint8_t mask, uint8_t value)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+
+    if (ADS1299_REG_IS_READONLY(reg)) {
+        ESP_LOGE(TAG, "Attempt to update read-only register 0x%02X", reg);
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    if (dev->rdatac_active) {
+        ESP_LOGW(TAG, "WREG rejected: device is in RDATAC (streaming) mode");
+        return ESP_ERR_INVALID_STATE;
+    }
+
+    if (!dev->mutex) return ESP_ERR_INVALID_STATE;
+
+    if (xSemaphoreTake(dev->mutex, portMAX_DELAY) != pdTRUE) {
+        return ESP_ERR_TIMEOUT;
+    }
+
+    uint8_t current = 0;
+    esp_err_t err = ads1299_read_register(dev, reg, &current);
+    if (err != ESP_OK) {
+        xSemaphoreGive(dev->mutex);
+        return err;
+    }
+
+    uint8_t newv = (current & (uint8_t)~mask) | (value & mask);
+    if (newv != current) {
+        err = ads1299_write_register(dev, reg, newv);
+        if (err != ESP_OK) {
+            ESP_LOGE(TAG, "Failed to write reg 0x%02X: %s", reg, esp_err_to_name(err));
+            xSemaphoreGive(dev->mutex);
+            return err;
+        }
+        ESP_LOGD(TAG, "Register 0x%02X updated: 0x%02X -> 0x%02X", reg, current, newv);
+    } else {
+        ESP_LOGD(TAG, "Register 0x%02X unchanged (mask indicates no-op)", reg);
+    }
+
+    xSemaphoreGive(dev->mutex);
+    return ESP_OK;
 }
 
 esp_err_t ads1299_send_command(ads1299_t* dev, uint8_t cmd)
@@ -631,14 +728,43 @@ esp_err_t ads1299_wakeup(ads1299_t* dev)
 
 esp_err_t ads1299_enable_continuous_read(ads1299_t* dev)
 {
+    if (!dev) return ESP_ERR_INVALID_ARG;
     esp_err_t ret = ads1299_send_command(dev, ADS1299_CMD_RDATAC);
+    if (ret == ESP_OK) {
+        /* Mark RDATAC/streaming mode active to reject R/WREG while streaming */
+        if (dev->mutex) {
+            /* Acquire mutex briefly to avoid races with concurrent writes */
+            if (xSemaphoreTake(dev->mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
+                dev->rdatac_active = true;
+                xSemaphoreGive(dev->mutex);
+            } else {
+                /* best-effort: set without mutex if unavailable */
+                dev->rdatac_active = true;
+            }
+        } else {
+            dev->rdatac_active = true;
+        }
+    }
     esp_rom_delay_us(ADS1299_T_RDATAC);
     return ret;
 }
 
 esp_err_t ads1299_disable_continuous_read(ads1299_t* dev)
 {
+    if (!dev) return ESP_ERR_INVALID_ARG;
     esp_err_t ret = ads1299_send_command(dev, ADS1299_CMD_SDATAC);
+    if (ret == ESP_OK) {
+        if (dev->mutex) {
+            if (xSemaphoreTake(dev->mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
+                dev->rdatac_active = false;
+                xSemaphoreGive(dev->mutex);
+            } else {
+                dev->rdatac_active = false;
+            }
+        } else {
+            dev->rdatac_active = false;
+        }
+    }
     esp_rom_delay_us(ADS1299_T_SDATAC);
     return ret;
 }
@@ -804,6 +930,7 @@ esp_err_t ads1299_start_continuous(ads1299_t  *dev, const ads1299_continuous_con
     ctx->dma_buf = heap_caps_malloc(ADS1299_FRAME_SIZE, MALLOC_CAP_DMA);
     if (!ctx->dma_buf) goto fail;
 
+
     /* ── Allocate ring buffer ────────────────────────────────────────── */
     esp_err_t err = ads1299_chunkring_init(&ctx->ring, ring_chunks, chunk_samples);
     if (err != ESP_OK) goto fail;
@@ -841,8 +968,8 @@ esp_err_t ads1299_start_continuous(ads1299_t  *dev, const ads1299_continuous_con
         .mode             = 1,
         .clock_speed_hz   = 4 * 1000 * 1000,
         .spics_io_num     = dev->config.cs_pin,
-        .cs_ena_pretrans  = 2,
-        .cs_ena_posttrans = 4,
+        .cs_ena_pretrans  = 4,
+        .cs_ena_posttrans = 8,
         .queue_size       = chunk_samples,   /* must hold all in-flight trans */
         .post_cb          = spi_post_transfer_cb,
     };
@@ -925,8 +1052,8 @@ esp_err_t ads1299_stop_continuous(ads1299_t *dev)
         .mode             = 1,
         .clock_speed_hz   = 4 * 1000 * 1000,
         .spics_io_num     = dev->config.cs_pin,
-        .cs_ena_pretrans  = 2,
-        .cs_ena_posttrans = 4,
+        .cs_ena_pretrans  = 4,
+        .cs_ena_posttrans = 8,
         .queue_size       = 1,
         .post_cb          = NULL,
     };
@@ -976,60 +1103,239 @@ esp_err_t ads1299_set_channel_gain(ads1299_t *dev, uint8_t channel, ads1299_pga_
     if (!dev) {
         return ESP_ERR_INVALID_ARG;
     }
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
     if (channel < 1 || channel > ADS1299_NUM_CHANNELS) {
         ESP_LOGE(TAG, "Invalid channel: %d. Must be 1 to %d", channel, ADS1299_NUM_CHANNELS);
         return ESP_ERR_INVALID_ARG;
     }
 
-    /* Target register is CH1SET (0x05) + (channel - 1) */
     uint8_t reg_addr = ADS1299_REG_CH1SET + (channel - 1);
-    uint8_t current_val = 0;
 
-    /* 1. Read the current configuration to avoid clobbering MUX or PD bits */
-    ESP_RETURN_ON_ERROR(
-        ads1299_read_register(dev, reg_addr, &current_val),
-        TAG,
-        "Failed to read CH%dSET register before modifying gain",
-        channel
-    );
-
-    /* 2. Mask out the current gain bits (bits 6:4 -> 0x70) */
-    uint8_t new_val = current_val & ~0x70;
-
-    /* 3. Bitwise OR the new gain enum value */
-    new_val |= (uint8_t)gain;
-
-    /* 4. Write the updated value back */
-    ESP_RETURN_ON_ERROR(
-        ads1299_write_register(dev, reg_addr, new_val),
-        TAG,
-        "Failed to write CH%dSET register for gain setting",
-        channel
-    );
-
-    ESP_LOGD(TAG, "Channel %d gain updated. CH%dSET: 0x%02X -> 0x%02X",
-             channel, channel, current_val, new_val);
-
-    return ESP_OK;
+    /* Use the safe masked RMW helper which acquires the driver mutex and
+     * enforces RDATAC/read-only guarding. The gain enum values are already
+     * aligned to the CHnSET gain bit positions, but wrap with the helper macro
+     * to be explicit. */
+    uint8_t gain_bits = ADS1299_CHSET_GAIN_VAL((uint8_t)gain);
+    return ads1299_update_register_masked(dev, reg_addr, ADS1299_CHSET_GAIN_MASK, gain_bits);
 }
 
 esp_err_t ads1299_set_all_channels_gain(ads1299_t *dev, ads1299_pga_gain_t gain)
 {
-    if (!dev) {
-        return ESP_ERR_INVALID_ARG;
-    }
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
 
+    /* Reject while in RDATAC mode */
+    if (dev->rdatac_active) return ESP_ERR_INVALID_STATE;
+
+    /* Acquire mutex once for the entire multi-channel update to make it
+     * atomic and reduce SPI bus overhead. */
+    if (!dev->mutex) return ESP_ERR_INVALID_STATE;
+    if (xSemaphoreTake(dev->mutex, portMAX_DELAY) != pdTRUE) return ESP_ERR_TIMEOUT;
+
+    esp_err_t err = ESP_OK;
     for (uint8_t ch = 1; ch <= ADS1299_NUM_CHANNELS; ch++) {
-        ESP_RETURN_ON_ERROR(
-            ads1299_set_channel_gain(dev, ch, gain),
-            TAG,
-            "Failed to set gain on channel %d during bulk update",
-            ch
-        );
+        uint8_t reg = ADS1299_REG_CH1SET + (ch - 1);
+        uint8_t cur = 0;
+        err = ads1299_read_register(dev, reg, &cur);
+        if (err != ESP_OK) break;
+        uint8_t newv = (cur & ~ADS1299_CHSET_GAIN_MASK) | ADS1299_CHSET_GAIN_VAL((uint8_t)gain);
+        err = ads1299_write_register(dev, reg, newv);
+        if (err != ESP_OK) break;
     }
 
-    return ESP_OK;
+    xSemaphoreGive(dev->mutex);
+    return err;
 }
+
+/* Channel MUX helpers */
+esp_err_t ads1299_set_channel_mux(ads1299_t *dev, uint8_t channel, ads1299_input_mux_t mux)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (channel < 1 || channel > ADS1299_NUM_CHANNELS) return ESP_ERR_INVALID_ARG;
+
+    uint8_t reg = ADS1299_REG_CH1SET + (channel - 1);
+    return ads1299_update_register_masked(dev, reg, ADS1299_CHSET_MUX_MASK, ADS1299_CHSET_MUX_VAL((uint8_t)mux));
+}
+
+esp_err_t ads1299_set_all_channels_mux(ads1299_t *dev, ads1299_input_mux_t mux)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (dev->rdatac_active) return ESP_ERR_INVALID_STATE;
+    if (!dev->mutex) return ESP_ERR_INVALID_STATE;
+
+    if (xSemaphoreTake(dev->mutex, portMAX_DELAY) != pdTRUE) return ESP_ERR_TIMEOUT;
+
+    esp_err_t err = ESP_OK;
+    for (uint8_t ch = 1; ch <= ADS1299_NUM_CHANNELS; ch++) {
+        uint8_t reg = ADS1299_REG_CH1SET + (ch - 1);
+        uint8_t cur = 0;
+        err = ads1299_read_register(dev, reg, &cur);
+        if (err != ESP_OK) break;
+        uint8_t newv = (cur & ~ADS1299_CHSET_MUX_MASK) | ADS1299_CHSET_MUX_VAL((uint8_t)mux);
+        err = ads1299_write_register(dev, reg, newv);
+        if (err != ESP_OK) break;
+    }
+
+    xSemaphoreGive(dev->mutex);
+    return err;
+}
+
+/* Channel power-down helper */
+esp_err_t ads1299_set_channel_powerdown(ads1299_t *dev, uint8_t channel, bool powerdown)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (channel < 1 || channel > ADS1299_NUM_CHANNELS) return ESP_ERR_INVALID_ARG;
+
+    uint8_t reg = ADS1299_REG_CH1SET + (channel - 1);
+    uint8_t pdv = ADS1299_CHSET_PDN_VAL(powerdown);
+    return ads1299_update_register_masked(dev, reg, ADS1299_CHSET_PDN_MASK, pdv);
+}
+
+esp_err_t ads1299_set_all_channels_powerdown(ads1299_t *dev, bool powerdown)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (dev->rdatac_active) return ESP_ERR_INVALID_STATE;
+    if (!dev->mutex) return ESP_ERR_INVALID_STATE;
+
+    if (xSemaphoreTake(dev->mutex, portMAX_DELAY) != pdTRUE) return ESP_ERR_TIMEOUT;
+
+    esp_err_t err = ESP_OK;
+    uint8_t pdv = ADS1299_CHSET_PDN_VAL(powerdown);
+    for (uint8_t ch = 1; ch <= ADS1299_NUM_CHANNELS; ch++) {
+        uint8_t reg = ADS1299_REG_CH1SET + (ch - 1);
+        uint8_t cur = 0;
+        err = ads1299_read_register(dev, reg, &cur);
+        if (err != ESP_OK) break;
+
+        uint8_t newv = (cur & (uint8_t)~ADS1299_CHSET_PDN_MASK) | pdv;
+        err = ads1299_write_register(dev, reg, newv);
+        if (err != ESP_OK) break;
+    }
+
+    xSemaphoreGive(dev->mutex);
+    return err;
+}
+
+/* SRB1 routing */
+esp_err_t ads1299_set_srb1(ads1299_t *dev, bool on)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+
+    uint8_t mask = ADS1299_MISC1_SRB1_ON;
+    uint8_t val = on ? ADS1299_MISC1_SRB1_ON : 0x00;
+    return ads1299_update_register_masked(dev, ADS1299_REG_MISC1, mask, val);
+}
+
+/* Bias helpers */
+esp_err_t ads1299_set_bias_enabled(ads1299_t *dev, bool enable)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+
+    uint8_t val = enable ? ADS1299_CONFIG3_BIAS_ON : ADS1299_CONFIG3_BIAS_OFF;
+    uint8_t mask = ADS1299_CONFIG3_BIAS_MASK;
+    return ads1299_update_register_masked(dev, ADS1299_REG_CONFIG3, mask, val);
+}
+
+esp_err_t ads1299_set_config4_loff_comp(ads1299_t *dev, bool enable)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+
+    return ads1299_update_register_masked(dev, ADS1299_REG_CONFIG4, ADS1299_CONFIG4_LOFF_COMP_MASK,
+                                         enable ? ADS1299_CONFIG4_LOFF_COMP_ON : ADS1299_CONFIG4_LOFF_COMP_OFF);
+}
+
+/* ---------- Bias / Lead-off per-channel helpers ---------- */
+static inline esp_err_t ads1299__validate_channel(uint8_t channel)
+{
+    return (channel >= 1 && channel <= ADS1299_NUM_CHANNELS) ? ESP_OK : ESP_ERR_INVALID_ARG;
+}
+
+esp_err_t ads1299_set_bias_sense(ads1299_t *dev, uint8_t channel, bool positive, bool enable)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (ads1299__validate_channel(channel) != ESP_OK) return ESP_ERR_INVALID_ARG;
+
+    uint8_t reg = positive ? ADS1299_REG_BIAS_SENSP : ADS1299_REG_BIAS_SENSN;
+    uint8_t mask = (uint8_t)(1u << (channel - 1));
+    uint8_t val = enable ? mask : 0x00;
+    return ads1299_update_register_masked(dev, reg, mask, val);
+}
+
+esp_err_t ads1299_set_all_bias_sense(ads1299_t *dev, bool positive, uint8_t channel_mask)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (dev->rdatac_active) return ESP_ERR_INVALID_STATE;
+    if (!dev->mutex) return ESP_ERR_INVALID_STATE;
+
+    uint8_t reg = positive ? ADS1299_REG_BIAS_SENSP : ADS1299_REG_BIAS_SENSN;
+
+    if (xSemaphoreTake(dev->mutex, portMAX_DELAY) != pdTRUE) return ESP_ERR_TIMEOUT;
+    /* Read current, replace masked bits, write back */
+    uint8_t cur = 0;
+    esp_err_t err = ads1299_read_register(dev, reg, &cur);
+    if (err == ESP_OK) {
+        uint8_t newv = (cur & (uint8_t)~channel_mask) | (channel_mask & channel_mask);
+        /* newv sets the bits that channel_mask requests; if we wanted to allow clearing bits
+         * selectively, caller should compute channel_mask accordingly. For clarity we write
+         * the requested mask as-is. */
+        err = ads1299_write_register(dev, reg, newv);
+    }
+    xSemaphoreGive(dev->mutex);
+    return err;
+}
+
+esp_err_t ads1299_set_loff_sense(ads1299_t *dev, uint8_t channel, bool positive, bool enable)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (ads1299__validate_channel(channel) != ESP_OK) return ESP_ERR_INVALID_ARG;
+
+    uint8_t reg = positive ? ADS1299_REG_LOFF_SENSP : ADS1299_REG_LOFF_SENSN;
+    uint8_t mask = (uint8_t)(1u << (channel - 1));
+    uint8_t val = enable ? mask : 0x00;
+    return ads1299_update_register_masked(dev, reg, mask, val);
+}
+
+esp_err_t ads1299_set_all_loff_sense(ads1299_t *dev, bool positive, uint8_t channel_mask)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (dev->rdatac_active) return ESP_ERR_INVALID_STATE;
+    if (!dev->mutex) return ESP_ERR_INVALID_STATE;
+
+    uint8_t reg = positive ? ADS1299_REG_LOFF_SENSP : ADS1299_REG_LOFF_SENSN;
+
+    if (xSemaphoreTake(dev->mutex, portMAX_DELAY) != pdTRUE) return ESP_ERR_TIMEOUT;
+    uint8_t cur = 0;
+    esp_err_t err = ads1299_read_register(dev, reg, &cur);
+    if (err == ESP_OK) {
+        uint8_t newv = (cur & (uint8_t)~channel_mask) | (channel_mask & channel_mask);
+        err = ads1299_write_register(dev, reg, newv);
+    }
+    xSemaphoreGive(dev->mutex);
+    return err;
+}
+
+esp_err_t ads1299_set_loff_flip(ads1299_t *dev, uint8_t channel, bool flip)
+{
+    if (!dev) return ESP_ERR_INVALID_ARG;
+    if (!dev->initialized) return ESP_ERR_INVALID_STATE;
+    if (ads1299__validate_channel(channel) != ESP_OK) return ESP_ERR_INVALID_ARG;
+
+    uint8_t mask = (uint8_t)(1u << (channel - 1));
+    uint8_t val = flip ? mask : 0x00;
+    return ads1299_update_register_masked(dev, ADS1299_REG_LOFF_FLIP, mask, val);
+}
+
 
 uint32_t ads1299_sample_rate_to_hz(ads1299_sample_rate_t rate)
 {
@@ -1044,4 +1350,30 @@ uint32_t ads1299_sample_rate_to_hz(ads1299_sample_rate_t rate)
         case ADS1299_DR_250SPS: return 250;
         default: return 0;
     }
+}
+
+
+int32_t ads1299_count_to_microvolts(int32_t signed_count, uint32_t vref_millivolts, ads1299_pga_gain_t gain) {
+
+    switch (gain) {
+        case ADS1299_PGA_GAIN_1: gain = 1; break;
+        case ADS1299_PGA_GAIN_2: gain = 2; break;
+        case ADS1299_PGA_GAIN_4: gain = 4; break;
+        case ADS1299_PGA_GAIN_6: gain = 6; break;
+        case ADS1299_PGA_GAIN_8: gain = 8; break;
+        case ADS1299_PGA_GAIN_12: gain = 12; break;
+        case ADS1299_PGA_GAIN_24: gain = 24; break;
+        default:
+            ESP_LOGE(TAG, "Invalid gain value: %d", gain);
+            return 0; // or handle error as appropriate
+    }
+    // 1. Calculate the denominator: Gain * (2^23 - 1)
+    // For 24-bit signed data, max positive range is 0x7FFFFF (8,388,607)
+    int64_t denominator = (int64_t)gain * 8388607;
+
+    // 2. Multiply first using 64-bit precision to prevent overflow, then divide
+    // Microvolts = (Count * VREF_mV * 1000) / Denominator
+    int64_t microvolts = ((int64_t)signed_count * vref_millivolts * 1000) / denominator;
+
+    return (int32_t)microvolts;
 }

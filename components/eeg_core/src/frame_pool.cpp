@@ -2,6 +2,6 @@
 
 namespace eeg {
 
-// TODO: implement per the architecture plan.
+// Implementation of the FramePool class template is in the header file, so no additional implementation is needed here.
 
 } // namespace eeg
