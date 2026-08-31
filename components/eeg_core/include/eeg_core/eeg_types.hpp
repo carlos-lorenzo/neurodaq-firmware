@@ -4,11 +4,25 @@
 // See: EEG firmware architecture plan, Part 4.
 // TODO: implement per the architecture plan.
 
+#include <cstdint>
+#include <array>
+#include <algorithm>
+
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <sys/uio.h>
+
 #include "ads1299.h"
 #include "ads1299_defs.h"
 
 namespace eeg {
-    typedef ads1299_chunk_t FrameType;
+    // typedef ads1299_chunk_t EEGFrame;
+
+    // struct EEGFrame {
+    //     ads1299_chunk_t chunk{};
+    //     EEGFrame() = default;
+    //     explicit EEGFrame(const ads1299_chunk_t& chunk) : chunk(chunk) {}
+    // };
 
     struct PinConfig {
             gpio_num_t drdy_pin;
@@ -46,9 +60,9 @@ namespace eeg {
                   ),
               use_srb1(true) {}
 
-        DeviceConfig(ads1299_sample_rate_t sample_rate, ads1299_pga_gain_t global_gain, std::uint8_t bias_mask, bool use_srb1) :
+        DeviceConfig(ads1299_sample_rate_t sample_rate, ads1299_pga_gain_t global_gain, std::uint8_t pd_mask, std::uint8_t bias_mask, bool use_srb1) :
             sample_rate(sample_rate),
-            channel_pd_mask(0xFF),
+            channel_pd_mask(pd_mask),
             channel_bias_sensp_mask(bias_mask),
             channel_gains({
                 global_gain,
@@ -62,5 +76,52 @@ namespace eeg {
                 ),
             use_srb1(use_srb1) {}
         };
+
+
+    enum class TransportType {
+        UDP,
+        USB,
+    };
+
+    struct EEGFrame {
+        std::array<ads1299_sample_t, 25> samples;
+        std::size_t n_samples;
+        int64_t first_timestamp_us;
+        int64_t last_timestamp_us;
+        int64_t dropped_count;
+        int64_t overflow_count;
+
+        EEGFrame() : n_samples(98), first_timestamp_us(123), last_timestamp_us(574), dropped_count(0), overflow_count(0) {}
+
+        EEGFrame(
+            const ads1299_sample_t* src,
+            std::size_t count,
+            int64_t first_timestamp,
+            int64_t last_timestamp,
+            int64_t dropped,
+            int64_t overflow
+        )
+            : n_samples(count),
+              first_timestamp_us(first_timestamp),
+              last_timestamp_us(last_timestamp),
+              dropped_count(dropped),
+              overflow_count(overflow)
+        {
+            std::copy_n(src, count, samples.begin());
+        }
+    };
+
+
+    struct __attribute__((packed)) TelemetryHeader {
+        uint32_t magic_header;    // MAGIC_HEADER = 0x21474545 (ASCII for "EEG!" - little-endian) :)
+        uint32_t sequence_number;
+
+        TelemetryHeader()
+            : magic_header(0x21474545), sequence_number(0) {}
+
+        TelemetryHeader(const uint32_t seq_num)
+            : magic_header(0x21474545), sequence_number(seq_num) {}
+    };
+
 
 } // namespace eeg

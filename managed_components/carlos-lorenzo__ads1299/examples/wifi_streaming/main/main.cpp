@@ -181,12 +181,12 @@ private:
 class Endpoint {
 public:
     Endpoint(const std::string_view ip, uint16_t port) {
-        std::memset(&addr, 0, sizeof(addr));
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons(port);
+                std::memset(&addr, 0, sizeof(addr));
+                addr.sin_family = AF_INET;
+                addr.sin_port = htons(port);
 
-        // This line sets the IP address:
-        inet_pton(AF_INET, ip.data(), &addr.sin_addr);
+                // This line sets the IP address:
+                inet_pton(AF_INET, ip.data(), &addr.sin_addr);
     };
 
 private:

@@ -1,27 +1,79 @@
 #pragma once
+
+#include <cstdint>
+#include <memory>
+#include <array>
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
+
 #include "eeg_manager/eeg_manager.hpp"
 #include "eeg_core/frame_pool.hpp"
 #include "eeg_core/eeg_types.hpp"
-
-// eeg::AppContext - owns construction/teardown order for everything above
-// See: EEG firmware architecture plan, Part 4.
-
+#include "telemetry/eeg_streamer.hpp"
+#include "control_plane/control_server.hpp"
 
 namespace eeg {
-    constexpr std::size_t n_consumers = 2; // TODO: make this configurable at compile time or runtime
-    constexpr std::size_t frame_pool_capacity = 10; // TODO: make this configurable at compile time or runtime
+
+    constexpr std::size_t n_consumers = 1;
+    constexpr std::size_t control_queue_capacity = 10;
+    constexpr std::size_t frame_pool_capacity = 10;
+
     class AppContext {
     public:
-        AppContext(const eeg::PinConfig &pin_config, const eeg::DeviceConfig &device_config);
-        // ~AppContext();
+        AppContext(
+            const eeg::PinConfig& pin_config,
+            const eeg::DeviceConfig& device_config
+        );
 
+        ~AppContext() = default;
+
+        AppContext(const AppContext&) = delete;
+        AppContext& operator=(const AppContext&) = delete;
+        AppContext(AppContext&&) = delete;
+        AppContext& operator=(AppContext&&) = delete;
 
     private:
-        FramePool<eeg::FrameType, frame_pool_capacity, n_consumers> raw_pool_{};
-        FramePool<eeg::FrameType, frame_pool_capacity, n_consumers> filtered_pool_{};
-        std::array<QueueHandle_t, n_consumers> raw_frame_queue_; // Array of queues for each consumer
-        std::array<QueueHandle_t, n_consumers> filtered_frame_queue_; // Array of queues for each consumer
-        EEGManager<frame_pool_capacity, n_consumers> eeg_manager_;
+        constexpr static auto TAG = "AppContext";
 
+        // -------------------------------------------------------------
+        // These are owned by AppContext.
+        // -------------------------------------------------------------
+
+        FramePool<
+            eeg::EEGFrame,
+            frame_pool_capacity,
+            n_consumers
+        > raw_pool_{};
+
+        FramePool<
+            eeg::EEGFrame,
+            frame_pool_capacity,
+            n_consumers
+        > filtered_pool_{};
+
+        std::array<QueueHandle_t, n_consumers> raw_frame_queue_{};
+        std::array<QueueHandle_t, n_consumers> filtered_frame_queue_{};
+
+        QueueHandle_t control_command_queue_{nullptr};
+        QueueHandle_t control_response_queue_{nullptr};
+
+        // -------------------------------------------------------------
+        // These depend on the resources above.
+        // -------------------------------------------------------------
+
+        EEGManager<
+            frame_pool_capacity,
+            n_consumers
+        > eeg_manager_;
+
+        EEGStreamer<
+            TransportType::UDP,
+            frame_pool_capacity,
+            n_consumers
+        > eeg_streamer_;
+
+        std::unique_ptr<ControlServer> control_server_;
     };
+
 } // namespace eeg

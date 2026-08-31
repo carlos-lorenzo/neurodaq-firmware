@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <atomic>
 #include <cstddef>
 #include <array>
@@ -50,28 +51,41 @@ namespace eeg {
          * @return T* Pointer to the constructed payload, or nullptr if the pool is full.
          */
         template <typename... Args>
-        [[nodiscard]] T* allocate(Args&&... args) noexcept {
-            // 1. Read current head index. Safe from producer races because only 1 thread calls this.
-            std::size_t index = free_head_.load(std::memory_order_relaxed);
+[[nodiscard]] T* allocate(Args&&... args) noexcept
+        {
+            std::size_t index =
+                free_head_.load(std::memory_order_acquire);
+
+            while (index < Capacity) {
+                const std::size_t next =
+                    free_list_[index].load(std::memory_order_acquire);
+
+                if (free_head_.compare_exchange_weak(
+                        index,
+                        next,
+                        std::memory_order_acquire,
+                        std::memory_order_relaxed)) {
+                    break;
+                        }
+            }
 
             if (index >= Capacity) {
                 return nullptr;
             }
 
-            // 2. Safe atomic load: Get the next structural index-linked in the free chain.
-            // Acquire barrier synchronizes with release stores executed inside the release loop.
-            std::size_t next_free = free_list_[index].load(std::memory_order_acquire);
-
-            // 3. Advance head pointer to peel this slot out of the free inventory
-            free_head_.store(next_free, std::memory_order_relaxed);
-            free_count_.fetch_sub(1, std::memory_order_relaxed);
-
-            // 4. Cleanly initialize slot components in-place without union UB concerns
             FrameSlot& slot = slots_[index];
-            std::construct_at(&slot.data, std::forward<Args>(args)...);
 
-            // 5. Publish structural initialization state cleanly to parallel consumer instances
-            slot.ref_count.store(Consumers, std::memory_order_release);
+            std::construct_at(
+                &slot.data,
+                std::forward<Args>(args)...
+            );
+
+            slot.ref_count.store(
+                Consumers,
+                std::memory_order_release
+            );
+
+            free_count_.fetch_sub(1, std::memory_order_relaxed);
 
             return &slot.data;
         }

@@ -66,20 +66,72 @@ menu "Neurodaq Configuration"
             bool "WAPI PSK"
     endchoice
 
-    config EXAMPLE_IPV4
-            bool "IPV4"
-            default y
+    config ESP_UDP_IP
+        string "UDP IP"
+        default "192.168.1.57"
+        help
+            IP address for the UDP transport.
 
-    config EXAMPLE_IPV6
-        bool "IPV6"
-        default n
-        select EXAMPLE_CONNECT_IPV6
 
-    config EXAMPLE_PORT
-        int "Port"
+    config ESP_UDP_PORT
+        int "UDP Port"
         range 0 65535
         default 3333
         help
-            Local port the example server will listen on.
+            EEG Streamer Port (UDP)
 
+
+    config ESP_TCP_PORT
+        int "TCP Port"
+        range 0 65535
+        default 3334
+        help
+            Control Server Port (TCP)
+
+    config ESP_TCP_TIMEOUT
+            int "TCP Timeout"
+            range 0 65535
+            default 5
+            help
+                Control Server Port (TCP)
+
+
+    menu "Task Core Affinity"
+
+        config EEG_MANAGER_CORE
+            int "EEGManager handler core"
+            range 0 1
+            default 1
+            help
+                Core for the EEGManager handler task.
+
+        config DSP_CORE
+            int "DSP core"
+            range 0 1
+            default 1
+            help
+                Core for the DSP task.
+
+        config EDGE_ML_CORE
+            int "Edge ML core"
+            range 0 1
+            default 0
+            help
+                Core for the Edge ML inference task.
+
+        config EEG_STREAMER_CORE
+            int "EEGStreamer core"
+            range 0 1
+            default 1
+            help
+                Core for the EEGStreamer task.
+
+        config CONTROL_SERVER_CORE
+            int "Control server core"
+            range 0 1
+            default 0
+            help
+                Core for the control server task.
+
+    endmenu
 endmenu

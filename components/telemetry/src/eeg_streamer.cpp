@@ -1,7 +1,5 @@
 #include "telemetry/eeg_streamer.hpp"
 
 namespace eeg {
-
-// TODO: implement per the architecture plan.
-
+    // Template class defined in header
 } // namespace eeg

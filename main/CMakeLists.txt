@@ -1,5 +1,5 @@
 idf_component_register(
         SRCS "main.cpp"
         INCLUDE_DIRS "."
-        REQUIRES carlos-lorenzo__ads1299 esp_driver_spi esp_driver_gpio esp_ringbuf esp_timer esp_wifi nvs_flash app
+        REQUIRES carlos-lorenzo__ads1299 esp_driver_spi esp_driver_gpio esp_ringbuf esp_timer esp_wifi nvs_flash app telemetry
 )
