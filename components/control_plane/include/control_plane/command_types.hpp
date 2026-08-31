@@ -80,7 +80,7 @@ namespace eeg {
     struct ControlResponse {
         uint32_t request_id;
         bool success;
-        std::string message; // Optional message for error or info
+        char message[64];
     };
 
 
