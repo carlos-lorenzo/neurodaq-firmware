@@ -70,3 +70,6 @@ Testing/
 
 sdkconfig
 sdkconfig.old
+.idea/
+error.txt
+tree.txt
