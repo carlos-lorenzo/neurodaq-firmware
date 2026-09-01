@@ -2,6 +2,6 @@
 
 namespace eeg {
 
-// TODO: implement per the architecture plan.
+// Not implemented — translation unit for the scaffolded biquad component. See biquad.hpp.
 
 } // namespace eeg

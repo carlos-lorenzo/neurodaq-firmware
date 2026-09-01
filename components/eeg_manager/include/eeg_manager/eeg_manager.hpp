@@ -1,5 +1,10 @@
 #pragma once
 
+// eeg::EEGManager — owns ADS1299 bring-up and the control-command loop. Configures the
+// AFE over SPI2, registers the chunk callback that fills EEGFrames from the frame pool,
+// and services ControlRequests from the TCP server. Header-only: all logic lives here
+// because the class is a template, so there is no matching .cpp.
+
 #include <cstdint>
 #include <array>
 #include <variant>

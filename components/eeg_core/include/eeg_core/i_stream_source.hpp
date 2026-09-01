@@ -1,8 +1,10 @@
 #pragma once
 
-// eeg::IStreamSource - pull-based consumer interface
-// See: EEG firmware architecture plan, Part 4.
-// TODO: implement per the architecture plan.
+// NOT IMPLEMENTED — scaffolded placeholder.
+// Intended: eeg::IStreamSource, a pull-based interface a consumer would use to draw
+// frames from a source (raw or DSP-filtered).
+// Current code wires the raw frame queue directly into EEGStreamer; there is no
+// abstraction yet. Tracking: see the component status table in README.md.
 
 namespace eeg {
 

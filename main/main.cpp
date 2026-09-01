@@ -27,6 +27,8 @@ extern  "C" void app_main(void)
     // Create the Wi-Fi station instance on the stack.
     eeg::WifiStation wifi_station(CONFIG_ESP_WIFI_SSID, CONFIG_ESP_WIFI_PASSWORD, CONFIG_ESP_MAXIMUM_RETRY);
     auto status = wifi_station.connect();
+    // Wi-Fi is required to boot: there is no offline fallback. If association fails,
+    // app_main returns and the device does nothing until reset.
     if (status != eeg::WifiStation::Status::Connected) {
         ESP_LOGE(TAG, "Failed to connect to Wi-Fi");
         return;
@@ -45,6 +47,9 @@ extern  "C" void app_main(void)
     };
     eeg::DeviceConfig device_config{ADS1299_DR_250SPS, ADS1299_PGA_GAIN_24, 0xFF, 0x01, true};
 
-    // Move the creation of AppContext to the heap to avoid accessing a destroyed object when the main function exits.
+    // AppContext owns all pools, queues and tasks. It is heap-allocated and
+    // deliberately never freed: it must outlive app_main's return, and the tasks it
+    // starts run for the lifetime of the device. The intentional "leak" is permanent,
+    // not a TODO.
     new eeg::AppContext(pin_config, device_config);
 }

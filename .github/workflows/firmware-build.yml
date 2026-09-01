@@ -1,0 +1,29 @@
+name: firmware-build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ESP-IDF build
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v6.0.2
+          target: esp32s3
+          path: '.'
+
+  host-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Catch2 + cmake
+        run: sudo apt-get update && sudo apt-get install -y catch2 cmake g++
+      - name: Build and run tests
+        run: |
+          cmake -S test -B test/build
+          cmake --build test/build
+          ctest --test-dir test/build --output-on-failure

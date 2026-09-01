@@ -1,5 +1,11 @@
 #pragma once
 
+// eeg::AppContext — the ownership root. Constructs and owns the frame pools, queues,
+// EEGManager, EEGStreamer and ControlServer by value; every other component holds
+// references into it. Member init order matters: pools and queues must exist before the
+// manager and streamer that reference them. Heap-allocated once in main.cpp and never
+// freed (see main.cpp).
+
 #include <cstdint>
 #include <memory>
 #include <array>

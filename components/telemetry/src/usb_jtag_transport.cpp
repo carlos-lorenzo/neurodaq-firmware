@@ -2,6 +2,6 @@
 
 namespace eeg {
 
-// TODO: implement per the architecture plan.
+// Not implemented — translation unit for the scaffolded USB JTAG transport. See usb_jtag_transport.hpp.
 
 } // namespace eeg

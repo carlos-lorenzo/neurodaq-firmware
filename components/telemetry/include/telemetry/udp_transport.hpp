@@ -1,7 +1,7 @@
 #pragma once
 
-// eeg::UdpTransport
-// See: EEG firmware architecture plan, Part 4.
+// eeg::UdpTransport — ITransport implementation that sends frames over a UDP socket
+// via scatter-gather sendmsg(). Constructed with a destination Endpoint.
 
 #include "eeg_core/eeg_types.hpp"
 #include "telemetry/i_transport.hpp"

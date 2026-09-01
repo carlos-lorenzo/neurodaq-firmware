@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-// TODO: implement per the architecture plan (Part 6, Phase 1/4/5).
+// Placeholder. The Catch2 harness builds and runs; this test asserts nothing.
 TEST_CASE("test_biquad placeholder", "[placeholder]") {
     REQUIRE(true);
 }

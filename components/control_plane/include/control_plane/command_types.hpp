@@ -1,8 +1,8 @@
 #pragma once
 
-// eeg::CommandId / Command / CommandResult
-// See: EEG firmware architecture plan, Part 4.
-// TODO: implement per the architecture plan.
+// Control-protocol command types: one struct per TCP command, the ControlCommand
+// variant over them, and the ControlRequest/ControlResponse envelopes.
+// Parsed from JSON by control_plane/json_protocol. See neurodaq/docs/PROTOCOL.md.
 
 #include <cstdint>
 #include <string>

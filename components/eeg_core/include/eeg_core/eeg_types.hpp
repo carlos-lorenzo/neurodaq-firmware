@@ -1,8 +1,8 @@
 #pragma once
 
-// FrameHeader / FrameView / PacketType / ContaminationFlags
-// See: EEG firmware architecture plan, Part 4.
-// TODO: implement per the architecture plan.
+// Core value types shared across components: PinConfig, DeviceConfig, TransportType,
+// EEGFrame (a pool-owned copy of one acquisition chunk), and TelemetryHeader (the
+// packed UDP packet header). See neurodaq/docs/PROTOCOL.md for the on-wire layout.
 
 #include <cstdint>
 #include <array>
@@ -16,13 +16,6 @@
 #include "ads1299_defs.h"
 
 namespace eeg {
-    // typedef ads1299_chunk_t EEGFrame;
-
-    // struct EEGFrame {
-    //     ads1299_chunk_t chunk{};
-    //     EEGFrame() = default;
-    //     explicit EEGFrame(const ads1299_chunk_t& chunk) : chunk(chunk) {}
-    // };
 
     struct PinConfig {
             gpio_num_t drdy_pin;
@@ -84,6 +77,9 @@ namespace eeg {
     };
 
     struct EEGFrame {
+        // Fixed capacity of 25 samples = 100 ms at 250 SPS. This does NOT scale with
+        // the sample rate: rates above 250 SPS produce more than 25 samples per 100 ms
+        // and would overrun this array.
         std::array<ads1299_sample_t, 25> samples;
         std::size_t n_samples;
         int64_t first_timestamp_us;
@@ -91,6 +87,8 @@ namespace eeg {
         int64_t dropped_count;
         int64_t overflow_count;
 
+        // Default ctor values (98, 123, 574) are placeholders; the chunk ctor below is
+        // the one used in practice. A default-constructed frame is never streamed as-is.
         EEGFrame() : n_samples(98), first_timestamp_us(123), last_timestamp_us(574), dropped_count(0), overflow_count(0) {}
 
         EEGFrame(
