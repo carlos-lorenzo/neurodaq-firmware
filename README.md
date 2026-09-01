@@ -2,17 +2,17 @@
 
 ESP-IDF firmware for [NeuroDAQ](https://github.com/carlos-lorenzo/neurodaq): drives a
 Texas Instruments **ADS1299** 8-channel 24-bit EEG front-end from an **ESP32-S3** over
-SPI2, batches samples into 100 ms frames, and streams them over Wi-Fi (UDP) while
+SPI2, batches samples into 100 ms frames (for now, will depend on sample rate - under development), and streams them over Wi-Fi (UDP) while
 accepting configuration over a TCP JSON control server.
 
 > **Status: under active development.** Acquisition, streaming, and control run
 > end-to-end. On-device DSP and ML are scaffolded but not implemented. See
 > [Component status](#component-status) and [Known limitations](#known-limitations).
 
-- **Target:** ESP32-S3-DevKitC-1-**N8R2** (dual-core Xtensa LX7 @ 160 MHz)
+- **Target:** ESP32-S3-DevKitC-1-**N32R8** (dual-core Xtensa)
 - **Toolchain:** ESP-IDF **v6.0.2**
 - **AFE:** ADS1299IPAGR over SPI2, via the [`carlos-lorenzo/ads1299`][drv] driver
-  (pulled from the ESP component registry — not vendored in-tree)
+  (pulled from the ESP component registry)
 
 [drv]: https://github.com/carlos-lorenzo/ads1299
 
@@ -68,7 +68,7 @@ is a placeholder.
 See [`pin_mappings.md`](pin_mappings.md) for the full ESP32-S3 ↔ ADS1299 / IMU /
 battery table. Note `CS2_ADC` (GPIO21) is routed for a **second cascaded ADS1299 that
 is neither populated nor driven by firmware**; the IMU and battery-management I2C pins
-are mapped but currently unused.
+are mapped but currently unused. These pins were left there for future upgrades (battery charge monitoring, expanding to 16 channels).
 
 ## Component status
 
@@ -103,7 +103,6 @@ These are documented, not yet fixed (tracked as issues):
 - **Lead-off configuration writes to the wrong register** (CONFIG4 instead of LOFF).
 - **Frames are fixed at 25 samples**, so sample rates above 250 SPS overrun the frame
   array — 250 SPS is the only safe rate today.
-- **Flash size is configured 32 MB** while the N8R2 module has 8 MB.
 - **Wi-Fi failure is a silent no-op boot** — there is no offline fallback; if the STA
   can't associate, `app_main` returns and nothing runs.
 - **Acquisition auto-starts** and most reconfiguration is rejected while running; use
